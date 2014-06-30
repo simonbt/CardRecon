@@ -106,10 +106,10 @@ class AgentControl extends ReconAbstract{
         $profiles = new Profiles($this->getPdo());
         $profileDetails = $profiles->profileDetails($profileID);
         $this->profile = array(
-            'username'  =>  $profileDetails['username'],
-            'password'  =>  $profileDetails['password'],
-            'domain'    =>  $profileDetails['domain'],
-            'path'      =>  $profileDetails['path']
+            'username'  =>  $profileDetails[0]['username'],
+            'password'  =>  $profileDetails[0]['password'],
+            'domain'    =>  $profileDetails[0]['domain'],
+            'path'      =>  $profileDetails[0]['path']
         );
     }
 }
