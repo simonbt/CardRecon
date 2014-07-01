@@ -49,7 +49,6 @@ class AgentControl extends ReconAbstract{
     private function winControl($hostIP, $command)
     {
         $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '/%' . $this->profile['password'] . ' //' . $hostIP . ' ' . $command;
-     echo $command;die();
         exec ( $command, $output, $returnValue);
         return $output;
     }
@@ -89,6 +88,7 @@ class AgentControl extends ReconAbstract{
         return $success;
     }
 
+    //winexe -U WORKGROUP/Administrator/%rand0m //192.168.200.250 cmd.exe /c md "c:/Program Files/OpenDLP" /Q /S
     private function createInstallDir($hostIP)
     {
         $command = 'cmd.exe /c md "' . $this->profile['path'] . '" /Q /S';
