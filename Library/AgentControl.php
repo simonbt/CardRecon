@@ -49,6 +49,8 @@ class AgentControl extends ReconAbstract{
     private function winControl($hostIP, $command)
     {
         $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '/%' . $this->profile['password'] . ' //' . $hostIP . ' "' . $this->profile['path'] . '/' . $command;
+
+     echo $command;die();
         exec ( $command, $output, $returnValue);
         return $output;
     }
