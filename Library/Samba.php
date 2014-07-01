@@ -103,7 +103,6 @@ class Samba {
 
     /**
      * Puts a local file
-     *
      * @param string $local_filename the full path to local filename
      * @param string $remote_filename (use the local system's directory separators)
      * @return bool true if successful, false otherwise
