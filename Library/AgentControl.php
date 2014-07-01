@@ -27,9 +27,9 @@ class AgentControl extends ReconAbstract{
         );
 
         $smb = new Samba('//'.$hostIP.'/C$', $this->profile['username'], $this->profile['password']);
-        die();
 
         $this->createInstallDir($hostIP);
+        die();
 
         $smb->mput($agentFiles, $this->profile['path']);
 
