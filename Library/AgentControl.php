@@ -61,7 +61,7 @@ class AgentControl extends ReconAbstract{
         $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '%' . $this->profile['password'] . ' //' . $hostIP . ' \'' . $command . '\'';
         echo $command . PHP_EOL;
         exec ( $command, $output, $returnValue);
-        return $output;
+        return array('output' => $output, 'exitcode' => $returnValue);
     }
 
     private function unpackService($hostIP)
@@ -73,7 +73,6 @@ class AgentControl extends ReconAbstract{
 
     private function createService($hostIP)
     {
-        //$command = $this->profile['path'] . '/sc.exe create OpenDLP binpath= "' . $this->profile['path'] . '/OpenDLP.exe" start= auto';
         $command = $this->profile['path'] . '/sc.exe create OpenDLP binpath= "c:\\Program Files\\OpenDLP\\OpenDLP.exe" start= auto';
 
         $success = $this->winControl($hostIP, $command);
