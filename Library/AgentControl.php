@@ -23,7 +23,9 @@ class AgentControl extends ReconAbstract{
         $agentFiles = array(
             __DIR__ . '/../Agent/OpenDLPz.exe',
             __DIR__ . '/../Agent/config.ini',
-            __DIR__ . '/../Agent/sc.exe'
+            __DIR__ . '/../Agent/sc.exe',
+            __DIR__ . '/../Agent/server.pem',
+            __DIR__ . '/../Agent/client.pem'
         );
 
         $smb = new Samba('//'.$hostIP.'/C$', $this->profile['username'], $this->profile['password']);
