@@ -13,7 +13,8 @@ class AgentControl extends ReconAbstract{
 
     protected $profile = array();
 
-    function __construct($profileID) {
+    function __construct($profileID, $pdo) {
+        parent::__construct($pdo);
         $this->setProfileInfo($profileID);
     }
 

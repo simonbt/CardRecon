@@ -8,5 +8,5 @@
 
 include_once('Library/bootstrap.php');
 
-$scanner = new \Library\AgentControl('1');
+$scanner = new \Library\AgentControl('1', $pdo);
 
