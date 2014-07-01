@@ -10,3 +10,4 @@ include_once('Library/bootstrap.php');
 
 $scanner = new \Library\AgentControl('1', $pdo);
 
+$scanner->deployAgent('192.168.200.250');
