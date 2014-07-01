@@ -1,0 +1,54 @@
+	if( $scantype eq "win_agent" )
+	{
+		if( $domain eq "" )
+		{
+			print "Domain cannot be blank<br><br>\n";
+			$is_valid = 0;
+		}
+		if( $path eq "" )
+		{
+			print "Path cannot be blank<br><br>\n";
+			$is_valid = 0;
+		}
+		if( $phonehomeurl eq "" )
+		{
+			print "Phone home URL cannot be blank<br><br>\n";
+			$is_valid = 0;
+		}
+		if( $delaytime eq "" )
+		{
+			print "Delay time cannot be blank<br><br>\n";
+			$is_valid = 0;
+		}
+		if( $domain !~ /^[A-Z0-9\-_]+$/i )
+		{
+			print "Windows domain can only contain alphanumeric, dash, and underscore characters<br><br>\n";
+			$is_valid = 0;
+		}
+		if( $username =~ /\"\/\\\[\]\:\;\|\=\,\+\*\?\<\>/ )
+		{
+			print "Username contains illegal characters<br><br>\n";
+			$is_valid = 0;
+		}
+		if( $memory != .01 && $memory != .02 && $memory != .05 && $memory != .1 && $memory != .15 && $memory != .2 && $memory != .25 )
+		{
+			print "Invalid memory limitation. It must be 1%, 2%, 5%, 10%, 15%, 20%, or 25%.<br><br>\n";
+			$is_valid = 0;
+		}
+
+		# Different scan types allow different characters in the list of systems to be scanned.
+		# We must perform individual checks for each scan type. We cannot combine this.
+		my @system_temp = split( "\n", $systems );
+		foreach my $system( @system_temp )
+		{
+			$system =~ s/\r$//g;
+			$system =~ s/\n$//g;
+
+			chomp $system;
+			if( $system !~ /^[A-Z0-9\.\-\_]+$/i )
+			{
+				$is_valid = 0;
+				print "\"Systems to scan\" has an invalid character.<br><br>\n";
+			}
+		}
+	}

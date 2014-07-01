@@ -1,0 +1,279 @@
+		elsif( $scantype eq "win_agent" )
+		{
+			print "<heading>Deploying a Windows Agent Filesystem Scan</heading><br><br>\n";
+			print "<table class=sample><tr><td>Do not close or leave this window until all scanners are deployed!</td></tr></table><br><br>\n";
+
+			print "<table class=sample><tr><td>General scan information</td></tr><tr><td>\n";
+			print "Scan name: $scanname<br>\n";
+			print "Profile: $profile<br>\n";
+			print "Systems: $systems<br>\n";
+			print "Concurrent: $concurrent<br>\n";
+			print "</td></tr></table><br><br>\n";
+
+			# This is where config was built previously. (it's now built above)
+
+			# If smbhash is not blank, set the environment variable SMBHASH
+			# to hold the value that will be passed to the host
+			my $smb = "";
+			if( $smbhash ne "" )
+			{
+				$ENV{'SMBHASH'} = $smbhash;
+				$smb = new Filesys::SmbClient( username => $username,
+					workgroup => $domain
+					);
+			}
+			else
+			{
+				$smb = new Filesys::SmbClient( username => $username,
+					password => $password,
+					workgroup => $domain,
+				);
+			}
+
+			my @list_of_systems = split( "\n", $systems );
+			my $length_of_systems = @list_of_systems;
+			Proc::Queue::size($concurrent);
+			foreach my $system( @list_of_systems )
+			{
+				$system =~ s/\r$//g;
+				$system =~ s/\n$//g;
+				$length_of_systems--;
+
+				my $f = fork;
+				if( defined ($f) and $f == 0 )
+				{
+					print "$system: Trying to deploy ($length_of_systems systems remain in queue)<br>\n";
+					my $printme = "";
+
+					# stat installation directory
+					my @directories = split( /\\/, $path );
+					my $built_dir = "smb://$system/" . substr($directories[0],0,1 ) . "\$/";
+					my $length_directories = @directories;
+					my $x = "";
+					my $fd = "";
+					for( $x = 1; $x < $length_directories; $x++ )
+					{
+						$built_dir .= $directories[$x] . "/";
+					}
+
+					# only create the directory if it does not exist
+					# OpenDLP will recursively delete the directory when all scanning is done
+					# If users use "c:\windows" as the install directory, this would be a
+					# very bad thing
+					my @stat_smb = $smb->stat( $built_dir );
+					if( $#stat_smb == 0 )
+					{
+						# build installation directory if it does not exist
+						my $built_dir = "smb://$system/" . substr($directories[0],0,1 ) . "\$/";
+						my $length_directories = @directories;
+						my $x = "";
+						my $fd = "";
+						for( $x = 1; $x < $length_directories; $x++ )
+						{
+							$built_dir .= $directories[$x] . "/";
+							if( ($smb->mkdir( $built_dir, '0600' )) == 0 )
+							{
+								$printme .= $! . "<br>\n";
+							}
+						}
+					}
+					else
+					{
+						print "$system: Directory already exists, terminating deployment and scan attempt<br>\n";
+						exit(0);
+					}
+
+					# copy config.ini to installation directory
+					my $file = $built_dir . "config.ini";
+					my @stat_smb = $smb->stat( $file );
+					my $tracker = "";
+					if( $#stat_smb == 0 )
+					{
+						my $fd = $smb->open( ">$file", 0600 );
+						my $config_copy = $config;
+						$config_copy .= "\n# Random string used for host tracking purposes.\n";
+						$config_copy .= "tracker=";
+						my @chars = ( 'A'..'F','0'..'9' );
+						srand();
+						foreach( 1..32 )
+						{
+							my $rand_char = $chars[rand @chars];
+							$config_copy .= $rand_char;
+							$tracker .= $rand_char;
+						}
+						if( ($smb->write( $fd, $config_copy )) < 0 )
+						{
+							$printme .= $! . "<br>\n";
+						}
+						$smb->close($fd);
+						$printme .= ">>> Copied config.ini file<br>\n";
+					}
+					else
+					{
+						$printme .= ">>> File \"$file\" already exists. The original file was left untouched and nothing was copied. Perhaps a scan is already running on this system?<br>\n";
+					}
+
+					# to be safe, copy sc.exe to installation directory
+					my $file = $built_dir . "sc.exe";
+					my @stat_smb = $smb->stat( $file );
+					if( $#stat_smb == 0 )
+					{
+						my $fd = $smb->open( ">$file", 0600 );
+						my @stat_info = stat( $sc_path );
+						my $sc_filesize = $stat_info[7];
+						open( SC, $sc_path );
+						binmode( SC );
+						my $sc_file = "";
+						read( SC, $sc_file, $sc_filesize );
+						if( ($smb->write( $fd, $sc_file )) < 0 )
+						{
+							$printme .= $! . "<br>\n";
+						}
+						if($fd) { $smb->close( $fd ); }
+						$printme .= ">>> Copied sc.exe file<br>\n";
+					}
+					else
+					{
+						$printme .= "File \"$file\" already exists. The original file was left untouched and nothing was copied. Perhaps a scan is already running on this system?<br>\n";
+					}
+
+					# copy self-extracting zip file with OpenDLP and DLLs to installation directory
+					my $file = $built_dir . "OpenDLPz.exe";
+					my @stat_smb = $smb->stat( $file );
+					if( $#stat_smb == 0 )
+					{
+						my $fd = $smb->open( ">$file", 0600 );
+						my @stat_info = stat( $OpenDLPz_path );
+						my $OpenDLPz_filesize = $stat_info[7];
+						open( OpenDLPz, $OpenDLPz_path );
+						binmode( OpenDLPz );
+						my $OpenDLPz_file = "";
+						read( OpenDLPz, $OpenDLPz_file, $OpenDLPz_filesize );
+						if( ($smb->write( $fd, $OpenDLPz_file )) < 0 )
+						{
+							$printme .= $! . "<br>\n";
+						}
+						if($fd) { $smb->close( $fd ); }
+						$printme .= ">>> Copied OpenDLPz.exe file<br>\n";
+					}
+					else
+					{
+						$printme .= "File \"$file\" already exists. The original file was left untouched and nothing was copied. Perhaps a scan is already running on this system?<br>\n";
+					}
+
+					# copy client.pem
+					my $file = $built_dir . "client.pem";
+					my @stat_smb = $smb->stat( $file );
+					if( $#stat_smb == 0 )
+					{
+						my $fd = $smb->open( ">$file", 0600 );
+						my @stat_info = stat( $client_pem_path );
+						my $client_pem_filesize = $stat_info[7];
+						open( client_pem, $client_pem_path );
+						binmode( client_pem );
+						my $client_pem_file = "";
+						read( client_pem, $client_pem_file, $client_pem_filesize );
+						if( ($smb->write( $fd, $client_pem_file )) < 0 )
+						{
+							print $! . "<br>\n";
+						}
+						if($fd) { $smb->close( $fd ); }
+						$printme .= ">>> Copied client.pem file<br>\n";
+					}
+					else
+					{
+						$printme .= ">>> File \"$file\" already exists. The original file was left untouched and nothing was copied. Perhaps a scan is already running on this system?<br>\n";
+					}
+
+					# copy server.pem
+					my $file = $built_dir . "server.pem";
+					my @stat_smb = $smb->stat( $file );
+					if( $#stat_smb == 0 )
+					{
+						my $fd = $smb->open( ">$file", 0600 );
+						my @stat_info = stat( $server_pem_path );
+						my $server_pem_filesize = $stat_info[7];
+						open( server_pem, $server_pem_path );
+						binmode( server_pem );
+						my $server_pem_file = "";
+						read( server_pem, $server_pem_file, $server_pem_filesize );
+						if( ($smb->write( $fd, $server_pem_file )) < 0 )
+						{
+							$printme .= $! . "<br>\n";
+						}
+						if($fd) { $smb->close( $fd ); }
+						$printme .= ">>> Copied server.pem file<br>\n";
+					}
+					else
+					{
+						$printme .= ">>> File \"$file\" already exists. The original file was left untouched and nothing was copied. Perhaps a scan is already running on this system?<br>\n";
+					}
+
+					my $escape_user = "";
+					my $length_user = length( $username );
+					my $x = 0;
+					for( $x = 0; $x < $length_user; $x++ )
+					{
+						$escape_user .= "\\" . substr( $username, $x, 1 );
+					}
+
+					my $escape_pass = "";
+					my $length_pass = length( $password );
+					my $x = 0;
+					for( $x = 0; $x < $length_pass; $x++ )
+					{
+						$escape_pass .= "\\" . substr( $password, $x, 1 );
+					}
+
+					# extract OpenDLPz.exe
+					$printme .= ">>> Creating OpenDLP service<br>\n";
+					my $command = "winexe --user=\'$domain\'\\$escape_user --password=$escape_pass //$system \'\"$path\\OpenDLPz.exe\" x -y -o\"$path\"\'";
+					$output = `$command`;
+					$output =~ s/\n/<br>/g;
+					$printme .= $output;
+
+					# create OpenDLP service (will use $description in future version)
+					my $command = "winexe --user=\'$domain\'\\$escape_user --password=$escape_pass //$system \'\"$path\\sc.exe\" create OpenDLP binpath= \"$path\\OpenDLP.exe\" start= auto\'";
+					my $output = `$command`;
+					$output =~ s/\n/<br>/g;
+					$printme .= $output;
+
+					# sleep a bit to allow Windows to regain normalcy
+					sleep(3);
+
+					# start OpenDLP service
+					my $command = "winexe --user=\'$domain\'\\$escape_user --password=$escape_pass //$system \'\"$path\\sc.exe\" start OpenDLP\'";
+					my $output = `$command`;
+					$output =~ s/\n/<br>/g;
+					my $is_deployed = 0;
+					if( $output =~ /START_PENDING/ )
+					{
+						$is_deployed = 1;
+					}
+					$printme .= ">>> Starting OpenDLP service<br>\n";
+					$printme .= $output;
+
+					# INSERT ip, updated, status, tracker, profile, scantype INTO systems;
+					my $dbh2 = DBI->connect("DBI:mysql:database=OpenDLP;host=localhost",$db_username,$db_password);
+					my $string = "INSERT into systems SET scan=?,domain=?,ip=?,status=?,updated=?,tracker=?,profile=?,control=?,scantype=?;";
+					my $sth2 = $dbh2->prepare( $string );
+					my $localtime = time();
+					$printme .= ">>> Populating database with system information<br>\n";
+					$sth2->execute( $scanname, $domain, $system, '-1', $localtime, $tracker, $profile, "running", $scantype );
+					$sth2->finish();
+					$dbh2->disconnect();
+					if( $is_deployed )
+					{
+						print "$system: OpenDLP deployed and started<br>\n";
+					}
+					else
+					{
+						print "$system: Possible error starting OpenDLP, check scan results when done deploying all agents here<br>\n";
+					}
+
+#					print "<table border=1><tr><td>Deployment information for $system</td></tr><tr><td>$printme</td></tr></table><br><br>";
+					exit(0);
+				}
+				1 while waitpid(-1, WNOHANG) > 0;
+			}
+		} #scantype = win_agent

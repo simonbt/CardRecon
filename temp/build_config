@@ -1,0 +1,90 @@
+	################
+	# BUILD CONFIG #
+	################
+  #Moved this out of the win_agent case because meta_agent/post_agent uses it as well.
+  my $config = "# Scan name\n";
+  $config .= "scan=$scanname\n";
+
+  $config .= "\n# Profile name\n";
+  $config .= "profile=$profile\n";
+
+  # config file - extensions
+  $config .= "\n# Ignore certain extensions? Valid options are:\n";
+  $config .= "#   everything - scan all files regardless of extension\n";
+  $config .= "#   ignore - ignore files ending in the following extensions\n";
+  $config .= "#   allow - only look at files ending in the following extensions\n";
+  $config .= "ext_opt=$ignore_exts\n";
+  my @extensions = split( "\n", $exts );
+  foreach my $blah( @extensions )
+  {
+    $blah =~ s/\n$//g;
+    $blah =~ s/\r$//g;
+    $config .= "ext=$blah\n";
+  }
+
+  # config file - directories
+  $config .= "\n# Ignore certain directories? Valid options are:\n";
+  $config .= "#   everything - scan all directories\n";
+  $config .= "#   ignore - ignore the following directories\n";
+  $config .= "#   allow - only scan the following directories\n";
+  $config .= "dir_opt=$ignore_dirs\n";
+  my @directories = split( "\n", $dirs );
+  foreach my $blah( @directories )
+  {
+    $blah =~ s/\n$//g;
+    $blah =~ s/\r$//g;
+    $config .= "dir=$blah\n";
+  }
+
+  # config file - regexes
+  $config .= "\n# Use the following regular expressions\n";
+  my @regex_array = split( ",", $regexes );
+  foreach my $regex_item( @regex_array )
+  {
+    my $string = "SELECT name,pattern FROM regexes WHERE number=?;";
+    $sth = $dbh->prepare( $string );
+    $sth->execute( $regex_item );
+    $results = $sth->fetchrow_arrayref();
+
+    $config .= "regex=$$results[0]:$$results[1]\n";
+  }
+
+  # config file - credit card regexes for mod10 checks
+  $config .= "\n# This is used so the OpenDLP agent knows which regexes are credit card numbers.\n";
+  $config .= "# Knowing this, the OpenDLP agent will perform further checks on these potential matches\n";
+  $config .= "# to determine if they are valid credit card numbers.\n";
+  my @ccs = split( "\n", $creditcards );
+  foreach my $blah( @ccs )
+  {
+    $blah =~ s/\n$//g;
+    $blah =~ s/\r$//g;
+    $config .= "creditcard=$blah\n";
+  }
+
+  # config file - zip file extensions
+  $config .= "\n# These file extensions tell OpenDLP to process the files as ZIPs.\n";
+  my @zips = split( "\n", $zipfiles );
+  foreach my $blah( @zips )
+  {
+    $blah =~ s/\n$//g;
+    $blah =~ s/\r$//g;
+    $config .= "zipfile=$blah\n";
+  }
+
+  # config file - misc
+  $config .= "\n# This is the duration to wait before uploading new results to the web server.\n";
+  $config .= "wait=$delaytime\n";
+  $config .= "\n# This is the location where to upload scan data.\n";
+  $config .= "uploadurl=$phonehomeurl\n";
+  $config .= "\n# This is the username for the upload URL.\n";
+  $config .= "urluser=$phonehomeuser\n";
+  $config .= "\n# This is the password for the upload URL.\n";
+  $config .= "urlpass=$phonehomepass\n";
+  $config .= "\n# This is the setting that controls the verbosity of logs.\n";
+  $config .= "debug=$debug\n";
+  $config .= "\n# This is the maximum percent of available memory to use for processing files.\n";
+  $config .= "# If a file is greater than this, it will be split into chunks.\n";
+  $config .= "memory=$memory\n";
+  ####################
+  # BUILD CONFIG END #
+  ####################
