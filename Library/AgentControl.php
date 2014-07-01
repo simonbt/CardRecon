@@ -27,12 +27,12 @@ class AgentControl extends ReconAbstract{
         );
 
         $smb = new Samba('//'.$hostIP.'/C$', $this->profile['username'], $this->profile['password']);
+        die();
 
         $this->createInstallDir($hostIP);
 
         $smb->mput($agentFiles, $this->profile['path']);
 
-        die();
         $this->unpackService($hostIP);
         $this->createService($hostIP);
         $this->startService($hostIP);
