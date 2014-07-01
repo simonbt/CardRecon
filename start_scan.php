@@ -1,6 +1,6 @@
 <?php
 /**
- * StormRecon - scan.php.
+ * StormRecon - start_scan.php.
  * User: simonbeattie
  * Date: 01/07/2014
  * Time: 13:25
