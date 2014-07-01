@@ -30,7 +30,8 @@ class AgentControl extends ReconAbstract{
 
         $this->createInstallDir($hostIP);
 
-        $smb->mput($agentFiles, $this->profile['path']);
+        $transfered = $smb->mput($agentFiles, $this->profile['path']);
+        print_r($transfered);
         die();
 
         $this->unpackService($hostIP);
