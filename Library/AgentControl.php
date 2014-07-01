@@ -41,10 +41,6 @@ class AgentControl extends ReconAbstract{
         $unpacked = $this->unpackService($hostIP);
         $created = $this->createService($hostIP);
         $started = $this->startService($hostIP);
-
-        print_r($started);
-
-
     }
 
     public function killAgent($hostIP)
@@ -57,6 +53,7 @@ class AgentControl extends ReconAbstract{
     private function winControl($hostIP, $command)
     {
         $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '%' . $this->profile['password'] . ' //' . $hostIP . ' \'' . $command . '\'';
+        echo $command . PHP_EOL;
         exec ( $command, $output, $returnValue);
         return $output;
     }
