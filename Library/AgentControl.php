@@ -104,7 +104,7 @@ class AgentControl extends ReconAbstract{
 
     private function deleteInstallDir($hostIP)
     {
-        $command = 'cmd.exe /c rd "' . $this->profile['path'] . '"';
+        $command = 'cmd.exe /c rd /S /Q "' . $this->profile['path'] . '"';
         $success = $this->winControl($hostIP, $command);
         return $success;
 
