@@ -153,6 +153,8 @@ class Samba {
     {
         $this->build_full_cmd($cmd);
 
+        echo $this->_cmd;
+
         $outfile = tempnam(".", "cmd");
         $errfile = tempnam(".", "cmd");
         $descriptorspec = array(
