@@ -91,14 +91,14 @@ class AgentControl extends ReconAbstract{
     //winexe -U WORKGROUP/Administrator/%rand0m //192.168.200.250 cmd.exe /c md "c:/Program Files/OpenDLP" /Q /S
     private function createInstallDir($hostIP)
     {
-        $command = 'cmd.exe /c md "' . $this->profile['path'] . '" /Q /S';
+        $command = 'cmd.exe /c md "' . $this->profile['path'] . '"';
         $success = $this->winControl($hostIP, $command);
         return $success;
     }
 
     private function deleteInstallDir($hostIP)
     {
-        $command = 'cmd.exe /c rd "' . $this->profile['path'] . '" /Q /S';
+        $command = 'cmd.exe /c rd "' . $this->profile['path'] . '"';
         $success = $this->winControl($hostIP, $command);
         return $success;
 
