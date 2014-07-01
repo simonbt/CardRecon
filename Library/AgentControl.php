@@ -48,7 +48,7 @@ class AgentControl extends ReconAbstract{
 
     private function winControl($hostIP, $command)
     {
-        $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '/%' . $this->profile['password'] . ' //' . $hostIP . ' ' . $command;
+        $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '%' . $this->profile['password'] . ' //' . $hostIP . ' \'' . $command . '\'';
         exec ( $command, $output, $returnValue);
         return $output;
     }
@@ -76,7 +76,7 @@ class AgentControl extends ReconAbstract{
 
     private function stopService($hostIP)
     {
-        $command = $this->profile['path']. '/sc.exe stop OpenDLP';
+        $command = $this->profile['path'] . '/sc.exe stop OpenDLP';
         $success = $this->winControl($hostIP, $command);
         return $success;
     }
