@@ -62,7 +62,7 @@ class AgentControl extends ReconAbstract{
 
     private function unpackService($hostIP)
     {
-        $command = $this->profile['path'] . '/StormReconz.exe';
+        $command = $this->profile['path'] . '/OpenDLPz.exe x -y -o"c:/Program Files/OpenDLP/"';
         $success = $this->winControl($hostIP, $command);
         return $success;
     }
