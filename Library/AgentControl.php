@@ -48,8 +48,7 @@ class AgentControl extends ReconAbstract{
 
     private function winControl($hostIP, $command)
     {
-        $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '/%' . $this->profile['password'] . ' //' . $hostIP . ' "' . $this->profile['path'] . '/' . $command;
-
+        $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '/%' . $this->profile['password'] . ' //' . $hostIP . ' ' . $command;
      echo $command;die();
         exec ( $command, $output, $returnValue);
         return $output;
@@ -57,35 +56,35 @@ class AgentControl extends ReconAbstract{
 
     private function unpackService($hostIP)
     {
-        $command = 'StormReconz.exe';
+        $command = $this->profile['path'] . '/StormReconz.exe';
         $success = $this->winControl($hostIP, $command);
         return $success;
     }
 
     private function createService($hostIP)
     {
-        $command = 'sc.exe create OpenDLP binpath= "' . $this->profile['path'] . '/OpenDLP.exe start= auto';
+        $command = $this->profile['path'] . '/sc.exe create OpenDLP binpath= "' . $this->profile['path'] . '/OpenDLP.exe" start= auto';
         $success = $this->winControl($hostIP, $command);
         return $success;
     }
 
     private function startService($hostIP)
     {
-        $command = 'sc.exe start OpenDLP';
+        $command = $this->profile['path'] . '/sc.exe start OpenDLP';
         $success = $this->winControl($hostIP, $command);
         return $success;
     }
 
     private function stopService($hostIP)
     {
-        $command = 'sc.exe stop OpenDLP';
+        $command = $this->profile['path']. '/sc.exe stop OpenDLP';
         $success = $this->winControl($hostIP, $command);
         return $success;
     }
 
     private function deleteService($hostIP)
     {
-        $command = 'sc.exe delete OpenDLP';
+        $command = $this->profile['path'] . '/sc.exe delete OpenDLP';
         $success = $this->winControl($hostIP, $command);
         return $success;
     }
