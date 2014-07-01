@@ -13,5 +13,4 @@ $scanner = new \Library\AgentControl('1', $pdo);
 
 
 //Deploy agent and start scan
-$scanner->deployAgent('192.168.200.250');
-
+$scanner->killAgent('192.168.200.250');
