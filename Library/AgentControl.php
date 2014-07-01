@@ -38,9 +38,10 @@ class AgentControl extends ReconAbstract{
 
         $unpacked = $this->unpackService($hostIP);
         $created = $this->createService($hostIP);
-        print_r($created);die();
+        $started = $this->startService($hostIP);
 
-        $this->startService($hostIP);
+        print_r($started);
+
 
     }
 
