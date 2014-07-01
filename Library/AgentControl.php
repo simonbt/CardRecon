@@ -29,12 +29,18 @@ class AgentControl extends ReconAbstract{
         $smb = new Samba('//'.$hostIP.'/C$', $this->profile['username'], $this->profile['password']);
 
         $this->createInstallDir($hostIP);
-        $transfered = $smb->mput($agentFiles, $this->profile['path']);
-        print_r($transfered);
+        $transferred = $smb->mput($agentFiles, $this->profile['path']);
 
-        die();
+        if (!$transferred)
+        {
+            die('Agent transfer via SMB failed!');
+        }
 
-        $this->unpackService($hostIP);
+        $unpacked = $this->unpackService($hostIP);
+
+        print_r($unpacked);        die();
+
+
         $this->createService($hostIP);
         $this->startService($hostIP);
 
