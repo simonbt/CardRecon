@@ -85,6 +85,7 @@ class Samba {
      */
     public function mput ($local_files, $remote_path)
     {
+        $remote_path = str_replace('c:', '', $remote_path);
         foreach ($local_files as $local_file)
         {
             $pi = pathinfo ($local_file);
@@ -152,8 +153,6 @@ class Samba {
     private function execute ($cmd)
     {
         $this->build_full_cmd($cmd);
-
-        echo $this->_cmd;
 
         $outfile = tempnam(".", "cmd");
         $errfile = tempnam(".", "cmd");
