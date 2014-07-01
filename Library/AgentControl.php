@@ -39,15 +39,21 @@ class AgentControl extends ReconAbstract{
         }
 
         $unpacked = $this->unpackService($hostIP);
+        print_r($unpacked);
         $created = $this->createService($hostIP);
+        print_r($created);
         $started = $this->startService($hostIP);
+        print_r($started);
     }
 
     public function killAgent($hostIP)
     {
-      $this->stopService($hostIP);
-      $this->deleteService($hostIP);
-      $this->deleteInstallDir($hostIP);
+        $stopped = $this->stopService($hostIP);
+        print_r($stopped);
+        $deleted = $this->deleteService($hostIP);
+        print_r($deleted);
+        $deleteDir = $this->deleteInstallDir($hostIP);
+        print_r($deleteDir);
     }
 
     private function winControl($hostIP, $command)
