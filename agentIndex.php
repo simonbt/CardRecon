@@ -24,3 +24,7 @@
 // 3: offset
 // 4: md5
 // 5: zipfile
+
+$config = "";
+
+file_put_contents('/tmp/config.ini', $config);
