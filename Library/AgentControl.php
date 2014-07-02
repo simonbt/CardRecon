@@ -124,8 +124,7 @@ class AgentControl extends ReconAbstract{
         $hostToAdd = array(
             'host_name'     =>  null,
             'ip_address'    =>  $this->ip_address,
-            'type'          =>  '1',
-            'status'        =>  '1'
+            'type'          =>  '1'
         );
         $this->tracker = $hosts->addHost($hostToAdd);
     }
