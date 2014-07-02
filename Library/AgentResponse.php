@@ -21,6 +21,9 @@ class AgentResponse extends ReconAbstract{
             {
                 $this->addResult(explode("\t", $result), $postData['tracker']);
             }
+
+            file_put_contents('/tmp/results.log', print_r($resultsFileContent, true), FILE_APPEND);
+
         }
 
         if (array_key_exists('log', $fileData))
@@ -39,6 +42,7 @@ class AgentResponse extends ReconAbstract{
             }
 
         }
+
         file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
     }

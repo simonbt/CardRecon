@@ -33,7 +33,7 @@ class Hosts extends ReconAbstract{
     public function addHost($postData)
     {
         $hostFields = array('host_name', 'ip_address', 'type');
-        $tracker = $this->randString('16');
+        $tracker = $this->randString('32');
 
         foreach ($hostFields as $key)
         {
