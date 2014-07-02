@@ -63,13 +63,13 @@ class AgentResponse extends ReconAbstract{
 
     private function updateHostProgress($bytesS, $filesS, $tracker)
     {
-        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =? AND filesscanned =? WHERE tracker =?');
+        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =? WHERE tracker =?');
         $updateProgress->execute(array($bytesS, $filesS, $tracker));
     }
 
     private function updateHostTotals($bytesT, $filesT, $tracker)
     {
-        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =? AND filestotal =? WHERE tracker =?');
+        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =? WHERE tracker =?');
         $updateTotals->execute(array($bytesT, $filesT, $tracker));
         file_put_contents('/tmp/error.log', print_r($updateTotals->errorInfo(), true), FILE_APPEND);
 
