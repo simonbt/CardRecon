@@ -14,7 +14,7 @@ class AgentResponse {
     {
         if (array_key_exists('results', $fileData))
         {
-            $resultsFileContent = file_get_contents($postData['results']['tmp_name']);
+            $resultsFileContent = file_get_contents($fileData['results']['tmp_name']);
             $resultsLine = explode("\n", $resultsFileContent);
             foreach ($resultsLine as $result)
             {
@@ -24,7 +24,7 @@ class AgentResponse {
 
         if (array_key_exists('log', $fileData))
         {
-            $logFileContent = file_get_contents($postData['log']['tmp_name']);
+            $logFileContent = file_get_contents($fileData['log']['tmp_name']);
             file_put_contents(__DIR__ . '/log.log', print_r($logFileContent, true), FILE_APPEND);
 
         }
