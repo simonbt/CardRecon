@@ -12,8 +12,9 @@ class AgentResponse extends ReconAbstract{
 
     private $queue;
 
-    function __construct()
+    function __construct($pdo)
     {
+        parent::__construct($pdo);
          $this->queue = new \Pheanstalk_Pheanstalk('127.0.0.1:11300');
     }
 
