@@ -58,6 +58,20 @@ class AgentControl extends ReconAbstract{
         print_r($deleteDir);
     }
 
+    public  function startService($hostIP)
+    {
+        $command = $this->profile['path'] . '/sc.exe start OpenDLP';
+        $success = $this->winControl($hostIP, $command);
+        return $success;
+    }
+
+    public  function stopService($hostIP)
+    {
+        $command = $this->profile['path'] . '/sc.exe stop OpenDLP';
+        $success = $this->winControl($hostIP, $command);
+        return $success;
+    }
+
     private function winControl($hostIP, $command)
     {
         $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '%' . $this->profile['password'] . ' //' . $hostIP . ' \'' . $command . '\'';
@@ -77,20 +91,6 @@ class AgentControl extends ReconAbstract{
     {
         $command = $this->profile['path'] . '/sc.exe create OpenDLP binpath= "c:\\Program Files\\OpenDLP\\OpenDLP.exe" start= auto';
 
-        $success = $this->winControl($hostIP, $command);
-        return $success;
-    }
-
-    private function startService($hostIP)
-    {
-        $command = $this->profile['path'] . '/sc.exe start OpenDLP';
-        $success = $this->winControl($hostIP, $command);
-        return $success;
-    }
-
-    private function stopService($hostIP)
-    {
-        $command = $this->profile['path'] . '/sc.exe stop OpenDLP';
         $success = $this->winControl($hostIP, $command);
         return $success;
     }

@@ -42,8 +42,8 @@ class Hosts extends ReconAbstract{
             }
         }
 
-        $hostsQuery = $this->getPdo()->prepare('INSERT INTO hosts (host_name, ip_address, type) VALUES(? ,? ,?)');
-        $response = $hostsQuery->execute(array($postData['host_name'], $postData['ip_address'], $postData['type']));
+        $hostsQuery = $this->getPdo()->prepare('INSERT INTO hosts (host_name, ip_address, type, tracker) VALUES(? ,? ,?, ?)');
+        $response = $hostsQuery->execute(array($postData['host_name'], $postData['ip_address'], $postData['type'], $this->randString('16')));
 
         if (!$response)
         {
@@ -90,6 +90,16 @@ class Hosts extends ReconAbstract{
         }
 
         return true;
+    }
+
+    private function randString($length, $charset='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    {
+        $str = '';
+        $count = strlen($charset);
+        while ($length--) {
+            $str .= $charset[mt_rand(0, $count-1)];
+        }
+        return $str;
     }
 
 } 
