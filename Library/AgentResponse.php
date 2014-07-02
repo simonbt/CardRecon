@@ -10,6 +10,13 @@ namespace Library;
 
 class AgentResponse extends ReconAbstract{
 
+    private $queue;
+
+    function __construct()
+    {
+         $this->queue = new \Pheanstalk_Pheanstalk('127.0.0.1:11300');
+    }
+
     public function receive($postData, $fileData)
     {
 
@@ -22,8 +29,6 @@ class AgentResponse extends ReconAbstract{
                 $this->addResult(explode("\t", $result), $postData['tracker']);
             }
 
-            //file_put_contents('/tmp/results.log', print_r($resultsFileContent, true), FILE_APPEND);
-
         }
 
         if (array_key_exists('log', $fileData))
@@ -35,20 +40,59 @@ class AgentResponse extends ReconAbstract{
 
         //file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
+        /*
+         * Job Actions
+         * 1 - Update host name
+         * 2 - Update host totals
+         * 3 - Update host progress
+         * 4 - Host completed
+         */
+
         if (array_key_exists('status', $postData))
         {
             switch($postData['status'])
             {
                 case 0 :
+                    $job = array(
+                        "action"        =>  '1',
+                        "host_name"     =>  $postData['hostname'],
+                        "start_time"    =>  date('Y-m-d H:i:s'),
+                        "status"        =>  '3',
+                        "tracker"       =>  $postData['tracker']
+                    );
+                    $this->queue->useTube('agent')->put(json_encode($job));
                     $this->updateHostName($postData['hostname'], $postData['tracker']);
                     break;
                 case 1 :
+                    $job = array(
+                        "action"        =>  '2',
+                        "bytestotal"    =>  $postData['bytestotal'],
+                        "filestotal"    =>  $postData['filestotal'],
+                        "status"        =>  '3',
+                        "tracker"       =>  $postData['tracker']
+                    );
+                    $this->queue->useTube('agent')->put(json_encode($job));
                     $this->updateHostTotals($postData['bytestotal'], $postData['filestotal'], $postData['tracker']);
                     break;
                 case 2 :
+                    $job = array(
+                        "action"        =>  '3',
+                        "bytesscanned"  =>  $postData['bytesscanned'],
+                        "filesscanned"  =>  $postData['filesscanned'],
+                        "tracker"       =>  $postData['tracker']
+                    );
+                    $this->queue->useTube('agent')->put(json_encode($job));
                     $this->updateHostProgress($postData['bytesscanned'], $postData['filesscanned'], $postData['tracker']);
                     break;
                 case 3 :
+                    $job = array(
+                        "action"        =>  '4',
+                        "bytesscanned"  =>  $postData['bytesscanned'],
+                        "filesscanned"  =>  $postData['filesscanned'],
+                        "tracker"       =>  $postData['tracker'],
+                        "profile"       =>  $postData['profile']
+                    );
+                    $this->queue->useTube('agent')->put(json_encode($job));
                     $this->hostCompleted($postData['bytesscanned'], $postData['filesscanned'], $postData['tracker'], $postData['profile']);
                     break;
             }
