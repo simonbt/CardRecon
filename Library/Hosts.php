@@ -33,7 +33,7 @@ class Hosts extends ReconAbstract{
     public function addHost($postData)
     {
         $hostFields = array('host_name', 'ip_address', 'type');
-        $tracker = $this->randString('32');
+        $tracker = $this->randString('16');
 
         foreach ($hostFields as $key)
         {
@@ -93,7 +93,7 @@ class Hosts extends ReconAbstract{
         return true;
     }
 
-    private function randString($length, $charset='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    private function randString($length, $charset='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx0123456789')
     {
         $str = '';
         $count = strlen($charset);
