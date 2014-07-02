@@ -33,6 +33,9 @@ class AgentResponse extends ReconAbstract{
 
         }
 
+        file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
+
+
         if (array_key_exists('status', $postData))
         {
             switch($postData['status'])
@@ -49,16 +52,10 @@ class AgentResponse extends ReconAbstract{
                 case 3:
                     break;
             }
-            if ($postData['status'] == '0')
-            {
-
-            }
-
         }
 
 
 
-        file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
     }
 
