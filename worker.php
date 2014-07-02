@@ -10,7 +10,6 @@ include_once('Library/bootstrap.php');
 
 
 $queue =  new Pheanstalk_Pheanstalk('127.0.0.1:11300');
-
 $worker = new \Library\Worker($pdo);
 
 // Set which queues to bind to
@@ -20,23 +19,45 @@ $queue->watch("agent");
 while($job = $queue->reserve()) {
     $received = json_decode($job->getData(), true);
 
-    print_r($received);
+    /*
+     * Job Actions
+     * 1 - Update host name
+     * 2 - Update host totals
+     * 3 - Update host progress
+     * 4 - Host completed
+     * 5 - Add result
+     */
 
-    $outcome = true;
-
-        // how did it go?
-        if($outcome) {
-            echo "done \n";
-            $queue->delete($job);
-        } else {
-            echo "failed \n";
+    switch($received['action'])
+    {
+        case 1:
+            echo "Got update hostname Job\n";
+            $result = $worker->updateHostName($received['hostname'], $received['tracker']);
+            $worker->checkSuccess($result, $queue, $job);
+            break;
+        case 2:
+            echo "Got update host totals job\n";
+            $result = $worker->updateHostTotals($received['bytestotal'], $received['filestotal'], $received['tracker']);
+            $worker->checkSuccess($result, $queue, $job);
+            break;
+        case 3:
+            echo "Got update host progress job\n";
+            $result = $worker->updateHostProgress($received['bytesscanned'], $received['filesscanned'], $received['tracker']);
+            $worker->checkSuccess($result, $queue, $job);
+            break;
+        case 4:
+            echo "Got update host completion job\n";
+            $result = $worker->hostCompleted($received['bytesscanned'], $received['filesscanned'], $received['tracker'], $received['profile']);
+            $worker->checkSuccess($result, $queue, $job);
+            break;
+        case 5:
+            echo "Got add results job\n";
+            $result = $worker->addResult($received['result'], $received['tracker']);
+            $worker->checkSuccess($result, $queue, $job);
+            break;
+        default:
+            echo "action not found\n";
             $queue->bury($job);
-        }
-
-
-//    } else {
-//        echo "action not found\n";
-//        $queue->bury($job);
-//    }
-
+            break;
+    }
 }

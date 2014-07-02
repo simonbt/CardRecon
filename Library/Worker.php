@@ -11,8 +11,102 @@ namespace Library;
 
 class Worker extends ReconAbstract {
 
-    public function update($data) {
-
-        return $data;
+    public function checkSuccess($result, \Pheanstalk_Pheanstalk $queue, $job)
+    {
+        if ($result)
+        {
+            echo "Job completed successfully!";
+        }
+        else
+        {
+            echo "Job FAILED! - Returning job into to the queue";
+            $queue->bury($job);
+        }
     }
+
+    private function uninstallAgent($profileID, $pdo, $hostID)
+    {
+        $scanner = new \Library\ExistingAgent($profileID[0], $pdo, $hostID[0]);
+        $scanner->killAgent();
+    }
+
+    public function hostCompleted($bytesS, $filesS, $tracker, $profile)
+    {
+        $date = date('Y-m-d H:i:s');
+        $result = $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =?, filesscanned =?, end_time =?, status =4 WHERE tracker =?');
+        if (!$result)
+        {
+            return false;
+        }
+        $updateProgress->execute(array($bytesS, $filesS, $date , $tracker));
+
+        $getHostID = $this->getPdo()->prepare('SELECT id FROM hosts WHERE tracker =?');
+        $result = $getHostID->execute(array($tracker));
+        if (!$result)
+        {
+            return false;
+        }
+        $hostID = $getHostID->fetchAll(\PDO::FETCH_COLUMN);
+
+        $getProfileID = $this->getPdo()->prepare('SELECT id FROM profiles WHERE profile_name =?');
+        $result = $getProfileID->execute(array($profile));
+        if (!$result)
+        {
+            return false;
+        }
+        $profileID = $getProfileID->fetchAll(\PDO::FETCH_COLUMN);
+
+        $this->uninstallAgent($profileID, $this->getPdo(), $hostID);
+        return true;
+    }
+
+    public function updateHostProgress($bytesS, $filesS, $tracker)
+    {
+        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =?, filesscanned =? WHERE tracker =?');
+        $result = $updateProgress->execute(array($bytesS, $filesS, $tracker));
+        if (!$result)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public function updateHostTotals($bytesT, $filesT, $tracker)
+    {
+        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =?, filestotal =?, status =3 WHERE tracker =?');
+        $result = $updateTotals->execute(array($bytesT, $filesT, $tracker));
+        if (!$result)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public function updateHostName($hostname, $tracker)
+    {
+        $date = date('Y-m-d H:i:s');
+        $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =?, start_time =?, status =2 WHERE tracker =?');
+        $result = $updateName->execute(array($hostname, $date, $tracker));
+        if (!$result)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public function addResult($result, $tracker)
+    {
+        $resultsQuery = $this->getPdo()->prepare('INSERT INTO results (tracker, filename, regex_name, result, offset, md5, zipfile) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        if (count($result) > 1)
+        {
+            array_unshift($result, $tracker);
+            $result = $resultsQuery->execute(array_pad($result, 7, null));
+            if (!$result)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
