@@ -31,13 +31,12 @@ class AgentResponse extends ReconAbstract{
 
         file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
-
     }
 
     private function addResult($result, $tracker)
     {
         $resultsQuery = $this->getPdo()->prepare('INSERT INTO results (tracker, filename, regex_name, result, offset, md5, zipfile) VALUES (?, ?, ?, ?, ?, ?, ?)');
-        if (!$result[2])
+        if (count($result) > 1)
         {
             array_unshift($result, $tracker);
             $success = $resultsQuery->execute(array_pad($result, 7, null));
