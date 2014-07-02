@@ -134,15 +134,10 @@ class AgentControl extends ReconAbstract{
         $return = "";
         foreach ($output as $line)
         {
-            $return .="ext=" . $line . "\n";
+            $return .="ext=" . $line;
         }
 
         return $return;
-    }
-
-    private function directories($directories)
-    {
-
     }
 
     private function createConfig()
@@ -152,14 +147,14 @@ class AgentControl extends ReconAbstract{
 scan={$this->scanName}
 
 # Profile name
-profile={$this->profile['profile']}
+profile={$this->profile['profile_name']}
 
 # Ignore certain extensions? Valid options are:
 #   everything - scan all files regardless of extension
 #   ignore - ignore files ending in the following extensions
 #   allow - only look at files ending in the following extensions
 ext_opt={$this->profile['ignore_exts']}
-{$this->ignores($this->profile['exts'])}}
+{$this->ignores($this->profile['exts'])}
 
 # Ignore certain directories? Valid options are:
 #   everything - scan all directories
