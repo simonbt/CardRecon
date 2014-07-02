@@ -15,15 +15,15 @@ class AgentControl extends ReconAbstract{
     protected $scanName;
     protected $tracker;
     protected $configIni;
+    protected $ip_address;
 
-    function __construct($profileID, $pdo, $scanName, $ip_address) {
-
-        parent::__construct($pdo);
-        $this->setProfileInfo($profileID);
-        $this->scanName = $scanName;
+    public function setIP($ip_address)
+    {
         $this->ip_address = $ip_address;
-        $this->createHost();
-        $this->setConfig();
+    }
+    public function setScanName($scanName)
+    {
+        $this->scanName = $scanName;
     }
 
     public function deployAgent()
@@ -118,7 +118,7 @@ class AgentControl extends ReconAbstract{
         return $success;
     }
 
-    private function createHost()
+    public function createHost()
     {
         $hosts = new Hosts($this->getPdo());
 
@@ -177,7 +177,7 @@ class AgentControl extends ReconAbstract{
 
     }
 
-    private function setProfileInfo($profileID)
+    public function setProfileInfo($profileID)
     {
         $profiles = new Profiles($this->getPdo());
         $profileDetails = $profiles->profileDetails($profileID);
@@ -215,7 +215,7 @@ class AgentControl extends ReconAbstract{
         return $return;
     }
 
-    private function setConfig()
+    public function setConfig()
     {
 
         $this->configIni = <<<CONFIG
