@@ -30,7 +30,7 @@ class AgentControl extends ReconAbstract{
         );
 
         $this->scanName = 'Scan Name';
-        file_put_contents('/tmp/config.log', $this->createConfig());
+        file_put_contents('/tmp/config.log', str_ireplace("\x0D", "", $this->createConfig()));
 
         $smb = new Samba('//'.$hostIP.'/C$', $this->profile['username'], $this->profile['password']);
 
