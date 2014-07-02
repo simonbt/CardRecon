@@ -9,9 +9,9 @@
 include_once('Library/bootstrap.php');
 
 //Set profile to use
-$scanner = new \Library\AgentControl('1', $pdo, 'ScanName1', 'lolwutlol');
+$scanner = new \Library\AgentControl('1', $pdo, 'ScanName1', '192.168.200.250');
 
 
 //Deploy agent and start scan
-$scanner->deployAgent('192.168.200.250');
+$scanner->deployAgent();
 

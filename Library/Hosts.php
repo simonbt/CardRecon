@@ -67,16 +67,16 @@ class Hosts extends ReconAbstract{
         return true;
     }
 
-    public function updateHost($id, $putData)
+    public function updateHost($id, $postData)
     {
-        $hostFields = array('host_name', 'ip_address', 'type');
+        $hostFields = array('host_name', 'ip_address', 'type', 'tracker');
 
         foreach ($hostFields as $key)
         {
-            if (array_key_exists($key, $putData))
+            if (array_key_exists($key, $postData))
             {
                 $hostsQuery = $this->getPdo()->prepare('UPDATE hosts SET ' . $key . ' =? WHERE id =?');
-                $response = $hostsQuery->execute(array($putData[$key], $id));
+                $response = $hostsQuery->execute(array($postData[$key], $id));
 
                 if (!$response)
                 {

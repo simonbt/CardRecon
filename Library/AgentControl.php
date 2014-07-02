@@ -16,16 +16,17 @@ class AgentControl extends ReconAbstract{
     protected $tracker;
     protected $configIni;
 
-    function __construct($profileID, $pdo, $scanName, $tracker) {
+    function __construct($profileID, $pdo, $scanName, $ip_address) {
 
         parent::__construct($pdo);
         $this->setProfileInfo($profileID);
-        $this->tracker = $tracker;
         $this->scanName = $scanName;
+        $this->ip_address = $ip_address;
+        $this->createHost();
         $this->setConfig();
     }
 
-    public function deployAgent($hostIP)
+    public function deployAgent()
     {
         $agentFiles = array(
             __DIR__ . '/../Agent/OpenDLPz.exe',
@@ -38,9 +39,9 @@ class AgentControl extends ReconAbstract{
         $this->scanName = 'Scan Name';
         file_put_contents('/tmp/config.ini', str_ireplace("\x0D", "", $this->configIni));
 
-        $smb = new Samba('//'.$hostIP.'/C$', $this->profile['username'], $this->profile['password']);
+        $smb = new Samba('//'.$this->ip_address.'/C$', $this->profile['username'], $this->profile['password']);
 
-        $createDir = $this->createInstallDir($hostIP);
+        $createDir = $this->createInstallDir($this->ip_address);
         print_r($createDir);
 
         $transferred = $smb->mput($agentFiles, $this->profile['path']);
@@ -50,79 +51,94 @@ class AgentControl extends ReconAbstract{
             die('Agent transfer via SMB failed!');
         }
 
-        $unpacked = $this->unpackService($hostIP);
+        $unpacked = $this->unpackService($this->ip_address);
         print_r($unpacked);
-        $created = $this->createService($hostIP);
+        $created = $this->createService($this->ip_address);
         print_r($created);
-        $started = $this->startService($hostIP);
+        $started = $this->startService($this->ip_address);
         print_r($started);
     }
 
-    public function killAgent($hostIP)
+
+    public function killAgent()
     {
-        $stopped = $this->stopService($hostIP);
+        $stopped = $this->stopService($this->ip_address);
         print_r($stopped);
-        $deleted = $this->deleteService($hostIP);
+        $deleted = $this->deleteService($this->ip_address);
         print_r($deleted);
-        $deleteDir = $this->deleteInstallDir($hostIP);
+        $deleteDir = $this->deleteInstallDir($this->ip_address);
         print_r($deleteDir);
     }
 
-    public  function startService($hostIP)
+    public  function startService()
     {
         $command = $this->profile['path'] . '/sc.exe start OpenDLP';
-        $success = $this->winControl($hostIP, $command);
+        $success = $this->winControl($this->ip_address, $command);
         return $success;
     }
 
-    public  function stopService($hostIP)
+    public  function stopService()
     {
         $command = $this->profile['path'] . '/sc.exe stop OpenDLP';
-        $success = $this->winControl($hostIP, $command);
+        $success = $this->winControl($this->ip_address, $command);
         return $success;
     }
 
-    private function winControl($hostIP, $command)
+    private function createHost()
     {
-        $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '%' . $this->profile['password'] . ' //' . $hostIP . ' \'' . $command . '\'';
+        $hosts = new Hosts($this->getPdo());
+
+        $hostToAdd = array(
+            'hostname'      =>  null,
+            'ip_address'    =>  $this->ip_address,
+            'type'          =>  'win_agent'
+        );
+
+        $this->tracker = $hosts->addHost($hostToAdd);
+
+    }
+
+    private function winControl($command)
+    {
+        $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '%' . $this->profile['password'] . ' //' . $this->ip_address . ' \'' . $command . '\'';
         echo $command . PHP_EOL;
         exec ( $command, $output, $returnValue);
         return array('output' => $output, 'exitcode' => $returnValue);
     }
 
-    private function unpackService($hostIP)
+    private function unpackService()
     {
         $command = $this->profile['path'] . '/OpenDLPz.exe x -y -o"c:/Program Files/OpenDLP/"';
-        $success = $this->winControl($hostIP, $command);
+        $success = $this->winControl($this->ip_address, $command);
         return $success;
     }
 
-    private function createService($hostIP)
+    private function createService()
     {
         $command = $this->profile['path'] . '/sc.exe create OpenDLP binpath= "c:\\Program Files\\OpenDLP\\OpenDLP.exe" start= auto';
 
-        $success = $this->winControl($hostIP, $command);
+        $success = $this->winControl($this->ip_address, $command);
         return $success;
     }
 
-    private function deleteService($hostIP)
+    private function deleteService()
     {
         $command = $this->profile['path'] . '/sc.exe delete OpenDLP';
-        $success = $this->winControl($hostIP, $command);
+        $success = $this->winControl($this->ip_address, $command);
         return $success;
     }
 
-    private function createInstallDir($hostIP)
+    private function createInstallDir()
     {
         $command = 'cmd.exe /c md "' . $this->profile['path'] . '"';
-        $success = $this->winControl($hostIP, $command);
+        $success = $this->winControl($this->ip_address, $command);
         return $success;
     }
 
-    private function deleteInstallDir($hostIP)
+    private function deleteInstallDir()
     {
         $command = 'cmd.exe /c rd /S /Q "' . $this->profile['path'] . '"';
-        $success = $this->winControl($hostIP, $command);
+        $success = $this->winControl($this->ip_address, $command);
         return $success;
 
     }

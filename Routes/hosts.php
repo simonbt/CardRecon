@@ -38,9 +38,9 @@ $app->delete('/hosts/:id', function($id) use($app, $hosts)
 });
 
 //Update host
-$app->put('/hosts/:id', function($id) use($app, $hosts)
+$app->post('/hosts/:id', function($id) use($app, $hosts)
 {
-    $putData = $app->request()->put();
+    $postData = $app->request()->post();
 
-    print_r($putData);
+    print_r($postData);
 });
