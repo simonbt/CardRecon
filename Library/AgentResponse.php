@@ -10,9 +10,9 @@ namespace Library;
 
 class AgentResponse {
 
-    public function receive($postData)
+    public function receive($postData, $fileData)
     {
-        if (array_key_exists('results', $postData))
+        if (array_key_exists('results', $fileData))
         {
             $resultsFileContent = file_get_contents($postData['results']['tmp_name']);
             $resultsLine = explode("\n", $resultsFileContent);
@@ -22,7 +22,7 @@ class AgentResponse {
             }
         }
 
-        if (array_key_exists('log', $postData))
+        if (array_key_exists('log', $fileData))
         {
             $logFileContent = file_get_contents($postData['log']['tmp_name']);
             file_put_contents(__DIR__ . '/log.log', print_r($logFileContent, true), FILE_APPEND);

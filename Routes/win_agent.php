@@ -11,5 +11,5 @@ $agentResponse = new \Library\AgentResponse();
 $app->post('/agent', function() use($app, $agentResponse)
 {
     $postData = $app->request()->post();
-    $agentResponse->receive($postData);
+    $agentResponse->receive($postData, $_FILES);
 });
