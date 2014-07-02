@@ -100,7 +100,11 @@ class AgentControl extends ReconAbstract{
         $deleteDir = $this->deleteInstallDir();
         if(!$deleteDir['exitcode'] == '0')
         {
-            die('Failed to unpack agent - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
+            $deleteDir2 = $this->deleteInstallDir();
+            if(!$deleteDir2)
+            {
+                die('Failed to unpack agent - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
+            }
         } else { echo 'success' . PHP_EOL; }
     }
 

@@ -267,31 +267,7 @@ if( $is_valid )
 			$sth->execute( $scan,$hostname,$regex_name,$result,$filename,$offset,$md5,$tracker );
 		}
 
-		# get OS credentials
-		my $string = "SELECT username,password,domain,path,hash,scantype,metahost,metaport,metauser,metapass,metalatency,metatimeout,metassl from profiles where profile=?";
 
-
-		$sth = $dbh->prepare( $string );
-		$sth->execute( $profile );
-		my $results = $sth->fetchrow_arrayref();
-
-		my $username = $$results[0];
-		my $password = $$results[1];
-		my $domain   = $$results[2];
-		my $path     = $$results[3];
-		my $scantype = $$results[5];
-		my $metahost = $$results[6];
-		my $metaport = $$results[7];
-		my $metauser = $$results[8];
-		my $metapass = $$results[9];
-		my $metalatency = $$results[10];
-		my $metatimeout = $$results[11];
-		my $metassl     = $$results[12];
-
-        if ($scantype eq "win_agent") {
-
-      # If smbhash is not blank, set the environment variable SMBHASH
-      # to hold the value that will be passed to the host
       if($$results[4] ne "")
       {
         $ENV{'SMBHASH'} = $$results[4];

@@ -22,27 +22,22 @@ class AgentResponse extends ReconAbstract{
                 $this->addResult(explode("\t", $result), $postData['tracker']);
             }
 
-            file_put_contents('/tmp/results.log', print_r($resultsFileContent, true), FILE_APPEND);
+            //file_put_contents('/tmp/results.log', print_r($resultsFileContent, true), FILE_APPEND);
 
         }
 
         if (array_key_exists('log', $fileData))
         {
             $logFileContent = file_get_contents($fileData['log']['tmp_name']);
-            file_put_contents('/tmp/log.log', print_r($logFileContent, true), FILE_APPEND);
+            //file_put_contents('/tmp/log.log', print_r($logFileContent, true), FILE_APPEND);
 
         }
 
-        file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
-
-
-
+        //file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
         if (array_key_exists('status', $postData))
         {
-            $status = $postData['status'];
-            file_put_contents('/tmp/post.log', $status, FILE_APPEND);
-            switch($status)
+            switch($postData['status'])
             {
                 case 0 :
                     $this->updateHostName($postData['hostname'], $postData['tracker']);
@@ -55,10 +50,6 @@ class AgentResponse extends ReconAbstract{
                     break;
             }
         }
-
-
-
-
     }
 
     private function updateHostProgress($bytesS, $filesS, $tracker)
@@ -69,17 +60,15 @@ class AgentResponse extends ReconAbstract{
 
     private function updateHostTotals($bytesT, $filesT, $tracker)
     {
-        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =?, filestotal =? WHERE tracker =?');
+        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =?, filestotal =?, status =3 WHERE tracker =?');
         $updateTotals->execute(array($bytesT, $filesT, $tracker));
-        file_put_contents('/tmp/error.log', print_r($updateTotals->errorInfo(), true), FILE_APPEND);
 
     }
 
     private function updateHostName($hostname, $tracker)
     {
-        $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =?, status =3 WHERE tracker =?');
+        $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =?, status =2 WHERE tracker =?');
         $updateName->execute(array($hostname, $tracker));
-        file_put_contents('/tmp/error.log', print_r($updateName->errorInfo(), true), FILE_APPEND);
 
     }
 
