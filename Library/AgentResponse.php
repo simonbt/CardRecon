@@ -8,7 +8,7 @@
 
 namespace Library;
 
-class AgentResponse {
+class AgentResponse extends ReconAbstract{
 
     public function receive($postData, $fileData)
     {
@@ -18,7 +18,7 @@ class AgentResponse {
             $resultsLine = explode("\n", $resultsFileContent);
             foreach ($resultsLine as $result)
             {
-                file_put_contents('/tmp/results.log', print_r(explode("\t", $result), true), FILE_APPEND);
+                $this->addResult(explode("\t", $result));
             }
         }
 
@@ -32,5 +32,19 @@ class AgentResponse {
         file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
 
+    }
+
+    private function addResult($result)
+    {
+        $resultsQuery = $this->getPdo()->prepare('INSERT INTO results (filename, regex_name, result, offset, md5, zipfile) VALUES (?, ?, ?, ?, ?, ?)');
+        if ($result[2])
+        {
+            $success = $resultsQuery->execute($result);
+
+            if (!$success)
+            {
+                die('Failed to add result - ' . print_r($resultsQuery->errorInfo()));
+            }
+        }
     }
 } 
