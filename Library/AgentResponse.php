@@ -63,7 +63,7 @@ class AgentResponse extends ReconAbstract{
 
     private function hostCompleted($bytesS, $filesS, $tracker, $profile)
     {
-        $date = date('d-m-Y H:i:s');
+        $date = date('Y-m-d H:i:s');
         $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =?, filesscanned =?, end_time =?, status =4 WHERE tracker =?');
         $updateProgress->execute(array($bytesS, $filesS, $date , $tracker));
 
