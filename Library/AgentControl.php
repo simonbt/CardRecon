@@ -134,7 +134,7 @@ class AgentControl extends ReconAbstract{
         $return = "";
         foreach ($output as $line)
         {
-            $return .="ext=" . $line;
+            $return .="ext=" . $line . "\r\n";
         }
 
         return $return;
