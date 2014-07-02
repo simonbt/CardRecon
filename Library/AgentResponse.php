@@ -68,11 +68,11 @@ class AgentResponse extends ReconAbstract{
 
         $getHostID = $this->getPdo()->prepare('SELECT id FROM hosts WHERE tracker =?');
         $getHostID->execute(array($tracker));
-        $hostID = $getHostID->fetchColumn(\PDO::FETCH_COLUMN);
+        $hostID = $getHostID->fetchAll(\PDO::FETCH_COLUMN);
 
         $getProfileID = $this->getPdo()->prepare('SELECT id FROM profiles WHERE profile_name =?');
         $getProfileID->execute(array($profile));
-        $profileID = $getProfileID->fetchColumn(\PDO::FETCH_COLUMN);
+        $profileID = $getProfileID->fetchAll(\PDO::FETCH_COLUMN);
 
         $this->uninstallAgent($profileID, $this->getPdo(), $hostID);
     }
