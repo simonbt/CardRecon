@@ -15,11 +15,12 @@ class Worker extends ReconAbstract {
     {
         if ($result)
         {
-            echo "Job completed successfully!";
+            echo "Job completed successfully!\n\n";
+            $queue->delete($job);
         }
         else
         {
-            echo "Job FAILED! - Returning job into to the queue";
+            echo "Job FAILED! - Returning job into to the queue\n";
             $queue->bury($job);
         }
     }
