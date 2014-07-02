@@ -22,10 +22,15 @@ class AgentResponse {
             }
         }
 
-        $logFileContent = file_get_contents($postData['log']['tmp_name']);
+        if (array_key_exists('log', $postData))
+        {
+            $logFileContent = file_get_contents($postData['log']['tmp_name']);
+            file_put_contents(__DIR__ . '/log.log', print_r($logFileContent, true), FILE_APPEND);
 
-        file_put_contents(__DIR__ . '/log.log', print_r($logFileContent, true), FILE_APPEND);
+        }
+
         file_put_contents(__DIR__ . '/post.log', print_r($postData, true), FILE_APPEND);
+
 
     }
 } 
