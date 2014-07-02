@@ -48,8 +48,33 @@ class AgentResponse extends ReconAbstract{
                 case 2 :
                     $this->updateHostProgress($postData['bytesscanned'], $postData['filesscanned'], $postData['tracker']);
                     break;
+                case 3 :
+                    $this->hostCompleted($postData['tracker'], $postData['profile']);
+                    break;
             }
         }
+    }
+
+    private function uninstallAgent($profileID, $pdo, $hostID)
+    {
+        $scanner = new \Library\ExistingAgent($profileID, $pdo, $hostID);
+        $scanner->killAgent();
+    }
+
+    private function hostCompleted($tracker, $profile)
+    {
+        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET status =4 WHERE tracker =?');
+        $updateProgress->execute(array($tracker));
+
+        $getHostID = $this->getPdo()->prepare('SELECT id FROM hosts WHERE tracker =?');
+        $getHostID->execute(array($tracker));
+        $hostID = $getHostID->fetchColumn(\PDO::FETCH_COLUMN);
+
+        $getProfileID = $this->getPdo()->prepare('SELECT id FROM profiles WHERE profile_name =?');
+        $getProfileID->execute(array($profile));
+        $profileID = $getProfileID->fetchColumn(\PDO::FETCH_COLUMN);
+
+        $this->uninstallAgent($profileID, $this->getPdo(), $hostID);
     }
 
     private function updateHostProgress($bytesS, $filesS, $tracker)
