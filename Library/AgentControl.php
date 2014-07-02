@@ -51,36 +51,36 @@ class AgentControl extends ReconAbstract{
             die('Agent transfer via SMB failed!');
         }
 
-        $unpacked = $this->unpackService($this->ip_address);
+        $unpacked = $this->unpackService();
         print_r($unpacked);
-        $created = $this->createService($this->ip_address);
+        $created = $this->createService();
         print_r($created);
-        $started = $this->startService($this->ip_address);
+        $started = $this->startService();
         print_r($started);
     }
 
 
     public function killAgent()
     {
-        $stopped = $this->stopService($this->ip_address);
+        $stopped = $this->stopService();
         print_r($stopped);
-        $deleted = $this->deleteService($this->ip_address);
+        $deleted = $this->deleteService();
         print_r($deleted);
-        $deleteDir = $this->deleteInstallDir($this->ip_address);
+        $deleteDir = $this->deleteInstallDir();
         print_r($deleteDir);
     }
 
     public  function startService()
     {
         $command = $this->profile['path'] . '/sc.exe start OpenDLP';
-        $success = $this->winControl($this->ip_address, $command);
+        $success = $this->winControl($command);
         return $success;
     }
 
     public  function stopService()
     {
         $command = $this->profile['path'] . '/sc.exe stop OpenDLP';
-        $success = $this->winControl($this->ip_address, $command);
+        $success = $this->winControl($command);
         return $success;
     }
 
