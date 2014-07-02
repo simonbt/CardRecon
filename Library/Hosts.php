@@ -43,7 +43,7 @@ class Hosts extends ReconAbstract{
             }
         }
 
-        $hostsQuery = $this->getPdo()->prepare('INSERT INTO hosts (host_name, ip_address, type, tracker) VALUES(? ,? ,?, ?, ?)');
+        $hostsQuery = $this->getPdo()->prepare('INSERT INTO hosts (host_name, ip_address, type, tracker) VALUES(? ,? , ?, ?)');
         $response = $hostsQuery->execute(array($postData['host_name'], $postData['ip_address'], $postData['type'], $tracker));
 
         if (!$response)
