@@ -40,7 +40,7 @@ class AgentResponse extends ReconAbstract{
         if (!$result[2])
         {
             array_unshift($result, $tracker);
-            $success = $resultsQuery->execute(array_pad($result, 6, null));
+            $success = $resultsQuery->execute(array_pad($result, 7, null));
 
             if (!$success)
             {
