@@ -40,16 +40,16 @@ class AgentResponse extends ReconAbstract{
         {
             switch($postData['status'])
             {
-                case "0":
+                case 0:
                     $this->updateHostName($postData);
                     break;
-                case "1":
+                case 1:
                     $this->updateHostTotals($postData);
                     break;
-                case "2":
+                case 2:
                     $this->updateHostProgress($postData);
                     break;
-                case "3":
+                case 3:
                     break;
             }
         }
@@ -76,6 +76,7 @@ class AgentResponse extends ReconAbstract{
         $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =? AND status =3 WHERE tracker =?');
         $updateName->execute(array($postData['hostname'], $postData['tracker']));
     }
+
     private function addResult($result, $tracker)
     {
         $resultsQuery = $this->getPdo()->prepare('INSERT INTO results (tracker, filename, regex_name, result, offset, md5, zipfile) VALUES (?, ?, ?, ?, ?, ?, ?)');
