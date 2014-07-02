@@ -34,7 +34,7 @@ class AgentResponse extends ReconAbstract{
         {
             if ($postData['status'] == '0')
             {
-                $updateName = $this->getPdo()->prepare('UPDATE hosts SET hostname =? WHERE tracker =?');
+                $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =? WHERE tracker =?');
                 $updateName->execute(array($postData['hostname'], $postData['tracker']));
             }
 
