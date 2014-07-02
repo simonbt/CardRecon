@@ -120,6 +120,7 @@ class Samba {
 
     public function configPut ($local_filename, $remote_filename)
     {
+        $remote_filename = str_replace('c:', '', $remote_filename);
         // convert to windows-style backslashes
         $remote_filename = str_replace (DIRECTORY_SEPARATOR, '\\', $remote_filename);
 

@@ -46,6 +46,7 @@ class AgentControl extends ReconAbstract{
         $transferred = $smb->mput($agentFiles, $this->profile['path']);
         if (!$transferred)
         {
+            $this->deleteInstallDir();
             die('Agent transfer via SMB failed!  ' . print_r($smb->get_last_cmd_stdout()));
         }
 
@@ -53,15 +54,32 @@ class AgentControl extends ReconAbstract{
         $transferredConfig = $smb->configPut('/tmp/'.$this->tracker.'.ini', $this->profile['path'].'/config.ini');
         if (!$transferredConfig)
         {
+            $this->deleteInstallDir();
             die('Config transfer via SMB failed!  ' . print_r($smb->get_last_cmd_stdout()));
         }
 
         $unpacked = $this->unpackService();
-        print_r($unpacked);
+        if(!$unpacked['exitcode'] == '0')
+        {
+            $this->deleteInstallDir();
+            die('Failed to unpack agent - Exit Code: ' . $unpacked['exitcode']);
+        }
+
         $created = $this->createService();
-        print_r($created);
+        if(!$created['exitcode'] == '0')
+        {
+            $this->deleteInstallDir();
+            die('Failed to unpack agent - Exit Code: ' . $created['exitcode']);
+        }
+
+
         $started = $this->startService();
-        print_r($started);
+        if(!$started['exitcode'] == '0')
+        {
+            $this->deleteService();
+            $this->deleteInstallDir();
+            die('Failed to unpack agent - Exit Code: ' . $started['exitcode']);
+        }
     }
 
 
