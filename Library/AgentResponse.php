@@ -18,18 +18,18 @@ class AgentResponse {
             $resultsLine = explode("\n", $resultsFileContent);
             foreach ($resultsLine as $result)
             {
-                file_put_contents(__DIR__ . '/results.log', print_r(explode("\t", $result), true), FILE_APPEND);
+                file_put_contents('/tmp/results.log', print_r(explode("\t", $result), true), FILE_APPEND);
             }
         }
 
         if (array_key_exists('log', $fileData))
         {
             $logFileContent = file_get_contents($fileData['log']['tmp_name']);
-            file_put_contents(__DIR__ . '/log.log', print_r($logFileContent, true), FILE_APPEND);
+            file_put_contents('/tmp/log.log', print_r($logFileContent, true), FILE_APPEND);
 
         }
 
-        file_put_contents(__DIR__ . '/post.log', print_r($postData, true), FILE_APPEND);
+        file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
 
     }
