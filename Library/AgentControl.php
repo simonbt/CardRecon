@@ -86,6 +86,8 @@ class AgentControl extends ReconAbstract{
             $this->deleteInstallDir();
             die('Failed to start service - Exit Code: ' . $started['exitcode'] . PHP_EOL);
         } else { echo 'success' . PHP_EOL; }
+
+        return true;
     }
 
 
@@ -115,6 +117,7 @@ class AgentControl extends ReconAbstract{
                 die('Failed to unpack agent - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
             }
         } else { echo 'success' . PHP_EOL; }
+        return true;
     }
 
     private function updateStatus($id)
@@ -127,14 +130,28 @@ class AgentControl extends ReconAbstract{
     {
         $command = $this->profile['path'] . '/sc.exe start OpenDLP';
         $success = $this->winControl($command);
-        return $success;
+        if(!$success)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public  function stopService()
     {
         $command = $this->profile['path'] . '/sc.exe stop OpenDLP';
         $success = $this->winControl($command);
-        return $success;
+        if(!$success)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public function createHost()

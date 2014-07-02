@@ -1,13 +1,12 @@
 <?php
 /**
- * StormRecon - worker.php.
+ * StormRecon - agent_worker.php.
  * User: simonbeattie
  * Date: 02/07/2014
  * Time: 22:03
  */
 
-include_once('Library/bootstrap.php');
-
+include_once(__DIR__ . '/../Library/bootstrap.php');
 
 $queue =  new Pheanstalk_Pheanstalk('127.0.0.1:11300');
 $worker = new \Library\Worker($pdo);
