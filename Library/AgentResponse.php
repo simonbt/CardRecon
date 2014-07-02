@@ -35,18 +35,50 @@ class AgentResponse extends ReconAbstract{
 
         if (array_key_exists('status', $postData))
         {
+            switch($postData['status'])
+            {
+                case 0:
+                    $this->updateHostName($postData);
+                    break;
+                case 1:
+                    $this->updateHostTotals($postData);
+                    break;
+                case 2:
+                    $this->updateHostProgress($postData);
+                    break;
+                case 3:
+                    break;
+            }
             if ($postData['status'] == '0')
             {
-                $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =? WHERE tracker =?');
-                $updateName->execute(array($postData['hostname'], $postData['tracker']));
+
             }
 
         }
+
+
 
         file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
     }
 
+    private function updateHostProgress($postData)
+    {
+        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =? AND filestotal =? WHERE tracker =?');
+        $updateProgress->execute(array($postData['bytestotal'], $postData['filestotal'], $postData['tracker']));
+    }
+
+    private function updateHostTotals($postData)
+    {
+        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =? AND filesscanned =? WHERE tracker =?');
+        $updateTotals->execute(array($postData['bytesscanned'], $postData['filesscanned'], $postData['tracker']));
+    }
+
+    private function updateHostName($postData)
+    {
+        $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =? AND status =3 WHERE tracker =?');
+        $updateName->execute(array($postData['hostname'], $postData['tracker']));
+    }
     private function addResult($result, $tracker)
     {
         $resultsQuery = $this->getPdo()->prepare('INSERT INTO results (tracker, filename, regex_name, result, offset, md5, zipfile) VALUES (?, ?, ?, ?, ?, ?, ?)');
