@@ -50,7 +50,7 @@ class AgentControl extends ReconAbstract{
         $transferredConfig = $smb->configPut('/tmp/'.$this->tracker.'.ini', $this->profile['path'].'/config.ini');
         if (!$transferredConfig)
         {
-            die('Config transfer via SMB failed!');
+            die('Config transfer via SMB failed!  ' . $smb->get_last_cmd_stdout());
         }
 
         $unpacked = $this->unpackService();
