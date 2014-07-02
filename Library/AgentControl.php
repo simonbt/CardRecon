@@ -89,7 +89,7 @@ class AgentControl extends ReconAbstract{
         $hosts = new Hosts($this->getPdo());
 
         $hostToAdd = array(
-            'hostname'      =>  null,
+            'host_name'      =>  null,
             'ip_address'    =>  $this->ip_address,
             'type'          =>  'win_agent'
         );
