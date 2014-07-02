@@ -25,7 +25,7 @@ class ExistingAgent extends AgentControl{
         $hosts = new Hosts($this->getPdo());
         $hostDetails = $hosts->hostDetails($hostID);
 
-        return $hostDetails['ip_address'];
+        return $hostDetails[0]['ip_address'];
 
     }
 

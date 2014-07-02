@@ -17,9 +17,9 @@ class NewAgent extends AgentControl {
         $this->setScanName($scanName);
         $this->setIP($ip_address);
         $this->setProfileInfo($profileID);
-        $this->setConfig();
-
         $this->createHost();
+
+        $this->setConfig();
     }
 
 } 
