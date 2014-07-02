@@ -30,14 +30,10 @@ class AgentControl extends ReconAbstract{
     {
         $agentFiles = array(
             __DIR__ . '/../Agent/OpenDLPz.exe',
-            __DIR__ . '/../Agent/config.ini',
             __DIR__ . '/../Agent/sc.exe',
             __DIR__ . '/../Agent/server.pem',
             __DIR__ . '/../Agent/client.pem'
         );
-
-        $this->scanName = 'Scan Name';
-        file_put_contents('/tmp/config.ini', str_ireplace("\x0D", "", $this->configIni));
 
         $smb = new Samba('//'.$this->ip_address.'/C$', $this->profile['username'], $this->profile['password']);
 
@@ -45,10 +41,16 @@ class AgentControl extends ReconAbstract{
         print_r($createDir);
 
         $transferred = $smb->mput($agentFiles, $this->profile['path']);
-
         if (!$transferred)
         {
             die('Agent transfer via SMB failed!');
+        }
+
+        file_put_contents('/tmp/'.$this->tracker.'.ini', str_ireplace("\x0D", "", $this->configIni));
+        $transferredConfig = $smb->configPut('/tmp/'.$this->tracker.'.ini', $this->profile['path'].'/config.ini');
+        if (!$transferredConfig)
+        {
+            die('Config transfer via SMB failed!');
         }
 
         $unpacked = $this->unpackService();

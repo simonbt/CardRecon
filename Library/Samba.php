@@ -118,6 +118,17 @@ class Samba {
         return $retval;
     }
 
+    public function configPut ($local_filename, $remote_filename)
+    {
+        // convert to windows-style backslashes
+        $remote_filename = str_replace (DIRECTORY_SEPARATOR, '\\', $remote_filename);
+
+        $cmd = "put \"$local_filename\" \"$remote_filename\"";
+
+        $retval = $this->execute ($cmd);
+        return $retval;
+    }
+
     /**
      * Deletes a remote file
      *

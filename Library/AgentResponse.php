@@ -12,6 +12,7 @@ class AgentResponse extends ReconAbstract{
 
     public function receive($postData, $fileData)
     {
+
         if (array_key_exists('results', $fileData))
         {
             $resultsFileContent = file_get_contents($fileData['results']['tmp_name']);
@@ -29,6 +30,15 @@ class AgentResponse extends ReconAbstract{
 
         }
 
+        if (array_key_exists('status', $postData))
+        {
+            if ($postData['status'] == '0')
+            {
+                $updateName = $this->getPdo()->prepare('UPDATE hosts SET hostname =? WHERE tracker =?');
+                $updateName->execute(array($postData['hostname'], $postData['tracker']));
+            }
+
+        }
         file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
     }
