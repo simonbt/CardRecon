@@ -109,7 +109,7 @@ class AgentControl extends ReconAbstract{
     private function unpackService()
     {
         $command = $this->profile['path'] . '/OpenDLPz.exe x -y -o"c:/Program Files/OpenDLP/"';
-        $success = $this->winControl($this->ip_address, $command);
+        $success = $this->winControl($command);
         return $success;
     }
 
@@ -117,28 +117,28 @@ class AgentControl extends ReconAbstract{
     {
         $command = $this->profile['path'] . '/sc.exe create OpenDLP binpath= "c:\\Program Files\\OpenDLP\\OpenDLP.exe" start= auto';
 
-        $success = $this->winControl($this->ip_address, $command);
+        $success = $this->winControl($command);
         return $success;
     }
 
     private function deleteService()
     {
         $command = $this->profile['path'] . '/sc.exe delete OpenDLP';
-        $success = $this->winControl($this->ip_address, $command);
+        $success = $this->winControl($command);
         return $success;
     }
 
     private function createInstallDir()
     {
         $command = 'cmd.exe /c md "' . $this->profile['path'] . '"';
-        $success = $this->winControl($this->ip_address, $command);
+        $success = $this->winControl($command);
         return $success;
     }
 
     private function deleteInstallDir()
     {
         $command = 'cmd.exe /c rd /S /Q "' . $this->profile['path'] . '"';
-        $success = $this->winControl($this->ip_address, $command);
+        $success = $this->winControl($command);
         return $success;
 
     }
