@@ -95,7 +95,7 @@ class AgentResponse extends ReconAbstract{
     {
         $date = date('d-m-Y H:i:s');
         $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =?, start_time =? status =2 WHERE tracker =?');
-        $updateName->execute(array($hostname, $date, $tracker));
+        $updateName->execute(array($hostname, 'time', $tracker));
 
     }
 
