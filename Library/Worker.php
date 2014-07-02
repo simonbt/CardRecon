@@ -33,13 +33,12 @@ class Worker extends ReconAbstract {
 
     public function hostCompleted($bytesS, $filesS, $tracker, $profile)
     {
-        $date = date('Y-m-d H:i:s');
         $result = $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =?, filesscanned =?, end_time =?, status =4 WHERE tracker =?');
         if (!$result)
         {
             return false;
         }
-        $updateProgress->execute(array($bytesS, $filesS, $date , $tracker));
+        $updateProgress->execute(array($bytesS, $filesS, date('Y-m-d H:i:s') , $tracker));
 
         $getHostID = $this->getPdo()->prepare('SELECT id FROM hosts WHERE tracker =?');
         $result = $getHostID->execute(array($tracker));
@@ -85,9 +84,9 @@ class Worker extends ReconAbstract {
 
     public function updateHostName($hostname, $tracker)
     {
-        $date = date('Y-m-d H:i:s');
+
         $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =?, start_time =?, status =2 WHERE tracker =?');
-        $result = $updateName->execute(array($hostname, $date, $tracker));
+        $result = $updateName->execute(array($hostname, date('Y-m-d H:i:s'), $tracker));
         if (!$result)
         {
             return false;
