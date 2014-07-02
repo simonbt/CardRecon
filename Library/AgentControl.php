@@ -40,6 +40,7 @@ class AgentControl extends ReconAbstract{
         $createDir = $this->createInstallDir($this->ip_address);
         if(!$createDir['exitcode'] == '0')
         {
+            $this->updateStatus('13');
             die('Failed to create directory - Exit Code: ' . $createDir['exitcode']);
         }
 
@@ -47,6 +48,7 @@ class AgentControl extends ReconAbstract{
         if (!$transferred)
         {
             $this->deleteInstallDir();
+            $this->updateStatus('11');
             die('Agent transfer via SMB failed!  ' . print_r($smb->get_last_cmd_stdout()));
         } else { echo 'success' . PHP_EOL; }
 
@@ -55,12 +57,14 @@ class AgentControl extends ReconAbstract{
         if (!$transferredConfig)
         {
             $this->deleteInstallDir();
+            $this->updateStatus('14');
             die('Config transfer via SMB failed!  ' . print_r($smb->get_last_cmd_stdout()) . PHP_EOL);
         } else { echo 'success' . PHP_EOL; }
 
         $unpacked = $this->unpackService();
         if(!$unpacked['exitcode'] == '0')
         {
+            $this->updateStatus('15');
             $this->deleteInstallDir();
             die('Failed to unpack agent - Exit Code: ' . $unpacked['exitcode'] . PHP_EOL);
         } else { echo 'success' . PHP_EOL; }
@@ -68,17 +72,19 @@ class AgentControl extends ReconAbstract{
         $created = $this->createService();
         if(!$created['exitcode'] == '0')
         {
+            $this->updateStatus('12');
             $this->deleteInstallDir();
-            die('Failed to unpack agent - Exit Code: ' . $created['exitcode'] . PHP_EOL);
+            die('Failed to create service - Exit Code: ' . $created['exitcode'] . PHP_EOL);
         } else { echo 'success' . PHP_EOL; }
 
 
         $started = $this->startService();
         if(!$started['exitcode'] == '0')
         {
+            $this->updateStatus('9');
             $this->deleteService();
             $this->deleteInstallDir();
-            die('Failed to unpack agent - Exit Code: ' . $started['exitcode'] . PHP_EOL);
+            die('Failed to start service - Exit Code: ' . $started['exitcode'] . PHP_EOL);
         } else { echo 'success' . PHP_EOL; }
     }
 
@@ -88,13 +94,15 @@ class AgentControl extends ReconAbstract{
         $stopped = $this->stopService();
         if(!$stopped['exitcode'] == '0')
         {
-            die('Failed to unpack agent - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
+            $this->updateStatus('8');
+            die('Failed to stop service - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
         } else { echo 'success' . PHP_EOL; }
 
         $deleted = $this->deleteService();
         if(!$deleted['exitcode'] == '0')
         {
-            die('Failed to unpack agent - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
+            $this->updateStatus('10');
+            die('Failed to delete service - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
         } else { echo 'success' . PHP_EOL; }
 
         $deleteDir = $this->deleteInstallDir();
@@ -103,9 +111,16 @@ class AgentControl extends ReconAbstract{
             $deleteDir2 = $this->deleteInstallDir();
             if(!$deleteDir2)
             {
+                $this->updateStatus('16');
                 die('Failed to unpack agent - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
             }
         } else { echo 'success' . PHP_EOL; }
+    }
+
+    private function updateStatus($id)
+    {
+        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET status =? WHERE tracker =?');
+        $updateProgress->execute(array($id));
     }
 
     public  function startService()
