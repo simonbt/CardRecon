@@ -63,8 +63,9 @@ class AgentResponse extends ReconAbstract{
 
     private function hostCompleted($bytesS, $filesS, $tracker, $profile)
     {
+        $date = date('d-m-Y H:i:s');
         $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =?, filesscanned =?, end_time =?, status =4 WHERE tracker =?');
-        $updateProgress->execute(array($bytesS, $filesS, date('d-m-Y H:i:s'), $tracker));
+        $updateProgress->execute(array($bytesS, $filesS, $date , $tracker));
 
         $getHostID = $this->getPdo()->prepare('SELECT id FROM hosts WHERE tracker =?');
         $getHostID->execute(array($tracker));
@@ -92,8 +93,9 @@ class AgentResponse extends ReconAbstract{
 
     private function updateHostName($hostname, $tracker)
     {
+        $date = date('d-m-Y H:i:s');
         $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =?, start_time =? status =2 WHERE tracker =?');
-        $updateName->execute(array($hostname, date('d-m-Y H:i:s'), $tracker));
+        $updateName->execute(array($hostname, $date, $tracker));
 
     }
 
