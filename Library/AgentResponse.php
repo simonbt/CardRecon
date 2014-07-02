@@ -46,6 +46,7 @@ class AgentResponse extends ReconAbstract{
             {
                 case 0 :
                     file_put_contents('/tmp/post.log', 'DOING STUFF', FILE_APPEND);
+                    die();
                     $this->updateHostName($postData);
                     break;
                 case 1 :
