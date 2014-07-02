@@ -63,21 +63,21 @@ class AgentResponse extends ReconAbstract{
 
     private function updateHostProgress($bytesS, $filesS, $tracker)
     {
-        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =? WHERE tracker =?');
-        $updateProgress->execute(array($bytesS, $tracker));
+        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =?, filesscanned =? WHERE tracker =?');
+        $updateProgress->execute(array($bytesS, $filesS, $tracker));
     }
 
     private function updateHostTotals($bytesT, $filesT, $tracker)
     {
-        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =? WHERE tracker =?');
-        $updateTotals->execute(array($bytesT, $tracker));
+        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =?, filestotal =? WHERE tracker =?');
+        $updateTotals->execute(array($bytesT, $filesT, $tracker));
         file_put_contents('/tmp/error.log', print_r($updateTotals->errorInfo(), true), FILE_APPEND);
 
     }
 
     private function updateHostName($hostname, $tracker)
     {
-        $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =? WHERE tracker =?');
+        $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =?, status =3 WHERE tracker =?');
         $updateName->execute(array($hostname, $tracker));
         file_put_contents('/tmp/error.log', print_r($updateName->errorInfo(), true), FILE_APPEND);
 
