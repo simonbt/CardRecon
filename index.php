@@ -18,5 +18,6 @@ include_once('Routes/profiles.php');
 include_once('Routes/regex.php');
 include_once('Routes/scans.php');
 include_once('Routes/hosts.php');
+include_once('Routes/win_agent.php');
 
 $app->run();
