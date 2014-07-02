@@ -38,18 +38,18 @@ class AgentResponse extends ReconAbstract{
 
         if (array_key_exists('status', $postData))
         {
-            switch($postData['status'])
+            switch(true)
             {
-                case 0:
+                case ($postData['status'] == "0") :
                     $this->updateHostName($postData);
                     break;
-                case 1:
+                case ($postData['status'] == "1") :
                     $this->updateHostTotals($postData);
                     break;
-                case 2:
+                case ($postData['status'] == "2") :
                     $this->updateHostProgress($postData);
                     break;
-                case 3:
+                case ($postData['status'] == "3") :
                     break;
             }
         }
