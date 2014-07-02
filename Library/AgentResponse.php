@@ -37,7 +37,7 @@ class AgentResponse extends ReconAbstract{
     private function addResult($result)
     {
         $resultsQuery = $this->getPdo()->prepare('INSERT INTO results (filename, regex_name, result, offset, md5, zipfile) VALUES (?, ?, ?, ?, ?, ?)');
-        if ($result[2])
+        if (!$result[2])
         {
             $success = $resultsQuery->execute(array_pad($result, 6, null));
 
