@@ -36,20 +36,22 @@ class AgentResponse extends ReconAbstract{
         file_put_contents('/tmp/post.log', print_r($postData, true), FILE_APPEND);
 
 
+
+
         if (array_key_exists('status', $postData))
         {
-            switch(true)
+            $status = $postData['status'];
+            file_put_contents('/tmp/post.log', $status, FILE_APPEND);
+            switch($status)
             {
-                case ($postData['status'] == "0") :
+                case 0 :
                     $this->updateHostName($postData);
                     break;
-                case ($postData['status'] == "1") :
+                case 1 :
                     $this->updateHostTotals($postData);
                     break;
-                case ($postData['status'] == "2") :
+                case 2 :
                     $this->updateHostProgress($postData);
-                    break;
-                case ($postData['status'] == "3") :
                     break;
             }
         }
