@@ -40,16 +40,16 @@ class AgentResponse extends ReconAbstract{
         {
             switch($postData['status'])
             {
-                case 0:
+                case "0":
                     $this->updateHostName($postData);
                     break;
-                case 1:
+                case "1":
                     $this->updateHostTotals($postData);
                     break;
-                case 2:
+                case "2":
                     $this->updateHostProgress($postData);
                     break;
-                case 3:
+                case "3":
                     break;
             }
         }
@@ -61,13 +61,13 @@ class AgentResponse extends ReconAbstract{
 
     private function updateHostProgress($postData)
     {
-        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =? AND filestotal =? WHERE tracker =?');
+        $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =? AND filesscanned =? WHERE tracker =?');
         $updateProgress->execute(array($postData['bytesscanned'], $postData['filesscanned'], $postData['tracker']));
     }
 
     private function updateHostTotals($postData)
     {
-        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytesscanned =? AND filesscanned =? WHERE tracker =?');
+        $updateTotals = $this->getPdo()->prepare('UPDATE hosts SET bytestotal =? AND filestotal =? WHERE tracker =?');
         $updateTotals->execute(array($postData['bytestotal'], $postData['filestotal'], $postData['tracker']));
     }
 
