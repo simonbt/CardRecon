@@ -18,7 +18,7 @@ class AgentResponse extends ReconAbstract{
             $resultsLine = explode("\n", $resultsFileContent);
             foreach ($resultsLine as $result)
             {
-                $this->addResult(explode("\t", $result));
+                $this->addResult(explode("\t", $result), $postData['tracker']);
             }
         }
 
@@ -34,11 +34,12 @@ class AgentResponse extends ReconAbstract{
 
     }
 
-    private function addResult($result)
+    private function addResult($result, $tracker)
     {
-        $resultsQuery = $this->getPdo()->prepare('INSERT INTO results (filename, regex_name, result, offset, md5, zipfile) VALUES (?, ?, ?, ?, ?, ?)');
+        $resultsQuery = $this->getPdo()->prepare('INSERT INTO results (tracker, filename, regex_name, result, offset, md5, zipfile) VALUES (?, ?, ?, ?, ?, ?, ?)');
         if (!$result[2])
         {
+            array_unshift($result, $tracker);
             $success = $resultsQuery->execute(array_pad($result, 6, null));
 
             if (!$success)
