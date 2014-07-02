@@ -33,6 +33,7 @@ class Hosts extends ReconAbstract{
     public function addHost($postData)
     {
         $hostFields = array('host_name', 'ip_address', 'type');
+        $tracker = $this->randString('16');
 
         foreach ($hostFields as $key)
         {
@@ -43,14 +44,14 @@ class Hosts extends ReconAbstract{
         }
 
         $hostsQuery = $this->getPdo()->prepare('INSERT INTO hosts (host_name, ip_address, type, tracker) VALUES(? ,? ,?, ?)');
-        $response = $hostsQuery->execute(array($postData['host_name'], $postData['ip_address'], $postData['type'], $this->randString('16')));
+        $response = $hostsQuery->execute(array($postData['host_name'], $postData['ip_address'], $postData['type'], $tracker));
 
         if (!$response)
         {
             die('Failed to add new host -- ' . print_r($hostsQuery->errorInfo()));
         }
 
-        return true;
+        return $tracker;
     }
 
     public function deleteHost($id)

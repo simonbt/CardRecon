@@ -48,29 +48,29 @@ class AgentControl extends ReconAbstract{
         {
             $this->deleteInstallDir();
             die('Agent transfer via SMB failed!  ' . print_r($smb->get_last_cmd_stdout()));
-        }
+        } else { echo 'success' . PHP_EOL; }
 
         file_put_contents('/tmp/'.$this->tracker.'.ini', str_ireplace("\x0D", "", $this->configIni));
         $transferredConfig = $smb->configPut('/tmp/'.$this->tracker.'.ini', $this->profile['path'].'/config.ini');
         if (!$transferredConfig)
         {
             $this->deleteInstallDir();
-            die('Config transfer via SMB failed!  ' . print_r($smb->get_last_cmd_stdout()));
-        }
+            die('Config transfer via SMB failed!  ' . print_r($smb->get_last_cmd_stdout()) . PHP_EOL);
+        } else { echo 'success' . PHP_EOL; }
 
         $unpacked = $this->unpackService();
         if(!$unpacked['exitcode'] == '0')
         {
             $this->deleteInstallDir();
-            die('Failed to unpack agent - Exit Code: ' . $unpacked['exitcode']);
-        }
+            die('Failed to unpack agent - Exit Code: ' . $unpacked['exitcode'] . PHP_EOL);
+        } else { echo 'success' . PHP_EOL; }
 
         $created = $this->createService();
         if(!$created['exitcode'] == '0')
         {
             $this->deleteInstallDir();
-            die('Failed to unpack agent - Exit Code: ' . $created['exitcode']);
-        }
+            die('Failed to unpack agent - Exit Code: ' . $created['exitcode'] . PHP_EOL);
+        } else { echo 'success' . PHP_EOL; }
 
 
         $started = $this->startService();
@@ -78,19 +78,30 @@ class AgentControl extends ReconAbstract{
         {
             $this->deleteService();
             $this->deleteInstallDir();
-            die('Failed to unpack agent - Exit Code: ' . $started['exitcode']);
-        }
+            die('Failed to unpack agent - Exit Code: ' . $started['exitcode'] . PHP_EOL);
+        } else { echo 'success' . PHP_EOL; }
     }
 
 
     public function killAgent()
     {
         $stopped = $this->stopService();
-        print_r($stopped);
+        if(!$stopped['exitcode'] == '0')
+        {
+            die('Failed to unpack agent - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
+        } else { echo 'success' . PHP_EOL; }
+
         $deleted = $this->deleteService();
-        print_r($deleted);
+        if(!$deleted['exitcode'] == '0')
+        {
+            die('Failed to unpack agent - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
+        } else { echo 'success' . PHP_EOL; }
+
         $deleteDir = $this->deleteInstallDir();
-        print_r($deleteDir);
+        if(!$deleteDir['exitcode'] == '0')
+        {
+            die('Failed to unpack agent - Exit Code: ' . $stopped['exitcode'] . PHP_EOL);
+        } else { echo 'success' . PHP_EOL; }
     }
 
     public  function startService()
