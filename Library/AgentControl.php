@@ -16,9 +16,12 @@ class AgentControl extends ReconAbstract{
     protected $tracker;
     protected $configIni;
 
-    function __construct($profileID, $pdo) {
+    function __construct($profileID, $pdo, $scanName, $tracker) {
+
         parent::__construct($pdo);
         $this->setProfileInfo($profileID);
+        $this->tracker = $tracker;
+        $this->scanName = $scanName;
         $this->setConfig();
     }
 
