@@ -38,7 +38,10 @@ class AgentControl extends ReconAbstract{
         $smb = new Samba('//'.$this->ip_address.'/C$', $this->profile['username'], $this->profile['password']);
 
         $createDir = $this->createInstallDir($this->ip_address);
-        print_r($createDir);
+        if(!$createDir['exitcode'] == '0')
+        {
+            die('Failed to create directory - Exit Code: ' . $createDir['exitcode']);
+        }
 
         $transferred = $smb->mput($agentFiles, $this->profile['path']);
         if (!$transferred)
