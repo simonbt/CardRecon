@@ -75,7 +75,7 @@ class AgentResponse extends ReconAbstract{
 
     private function updateHostName($hostname, $tracker)
     {
-        file_put_contents('/tmp/post.log', 'HOSTNAME'.print_r($hostname, true), FILE_APPEND);
+        file_put_contents('/tmp/post.log', 'HOSTNAME-'.$hostname.PHP_EOL, FILE_APPEND);
         $updateName = $this->getPdo()->prepare('UPDATE hosts SET host_name =? AND status =3 WHERE tracker =?');
         $updateName->execute(array($hostname, $tracker));
     }
