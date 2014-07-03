@@ -1,0 +1,33 @@
+{
+    "name": "stormframework/logger",
+    "description": "A Simple Logging Class",
+    "keywords": ["logging"],
+    "require": {
+        "php": ">=5.3",
+        "psr/log": "1.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kenny Katzgrau",
+            "email": "katzgrau@gmail.com"
+        },
+        {
+            "name": "Dan Horrigan",
+            "email": "dan@dhorrigan.com"
+        },
+	{
+	    "name": "Thomas Gray",
+	    "email": "tom@osg.me"
+	}
+    ],
+    "autoload": {
+        "psr-4": {
+            "StormFramework\\Logger\\": "StormFramework/Logger"
+        },
+        "classmap": ["StormFramework/Logger"]
+    }
+}
