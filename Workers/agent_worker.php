@@ -8,8 +8,7 @@
 
 include_once(__DIR__ . '/../Library/bootstrap.php');
 
-$queue =  new Pheanstalk_Pheanstalk('127.0.0.1:11300');
-$worker = new \Library\Worker($pdo);
+$worker = new \Library\Worker($pdo, $queue, $logger);
 
 // Set which queues to bind to
 $queue->watch("agent");

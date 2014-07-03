@@ -11,9 +11,9 @@ namespace Library;
 
 class NewAgent extends AgentControl {
 
-    function __construct( $pdo, $profileID, $scanName, $ip_address ) {
+    function __construct( $pdo, $profileID, $scanName, $ip_address ,$queue, $logger) {
 
-        parent::__construct($pdo);
+        parent::__construct($pdo, $queue, $logger);
         $this->setScanName($scanName);
         $this->setIP($ip_address);
         $this->setProfileInfo($profileID);

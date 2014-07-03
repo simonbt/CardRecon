@@ -27,7 +27,7 @@ if (file_exists(__DIR__ . '/../config.php'))
 }
 else
 {
-    die('Config.php does not exist - Please run install.sh');
+    die('Config.php does not exist');
 }
 
 try {
@@ -36,7 +36,18 @@ try {
         $config['db']['username'],
         $config['db']['password']
     );
-} catch (\PDOException $pdoError)
+}
+catch (\PDOException $pdoError)
 {
     print $pdoError->getMessage() . PHP_EOL;
 }
+
+try {
+    $queue = new \Pheanstalk_Pheanstalk($config['beanstalkd']['hostname'] . ':' . $config['beanstalkd']['port']);
+}
+catch (\Pheanstalk_Exception $queueError)
+{
+    print $queueError->getMessage() . PHP_EOL;
+}
+
+$logger = new \StormFramework\Logger\ContextLogger($config['location'], $config['level']);

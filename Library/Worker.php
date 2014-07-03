@@ -27,7 +27,7 @@ class Worker extends ReconAbstract {
 
     private function uninstallAgent($profileID, $pdo, $hostID)
     {
-        $scanner = new \Library\ExistingAgent($profileID[0], $pdo, $hostID[0]);
+        $scanner = new \Library\ExistingAgent($profileID[0], $pdo, $hostID[0], $this->getQueue(), $this->getLogger());
         $scanner->killAgent();
     }
 
@@ -56,7 +56,7 @@ class Worker extends ReconAbstract {
         }
         $profileID = $getProfileID->fetchAll(\PDO::FETCH_COLUMN);
 
-        $this->uninstallAgent($profileID, $this->getPdo(), $hostID);
+        $this->uninstallAgent($profileID, $this->getPdo(), $hostID, $this->getQueue(), $this->getLogger());
         return true;
     }
 

@@ -10,14 +10,6 @@ namespace Library;
 
 class AgentResponse extends ReconAbstract{
 
-    private $queue;
-
-    function __construct($pdo)
-    {
-        parent::__construct($pdo);
-         $this->queue = new \Pheanstalk_Pheanstalk('127.0.0.1:11300');
-    }
-
     public function receive($postData, $fileData)
     {
 
@@ -31,7 +23,7 @@ class AgentResponse extends ReconAbstract{
                     'result'    =>  explode("\t", $result),
                     'tracker'   =>  $postData['tracker']
                 );
-                $this->queue->useTube('agent')->put(json_encode($job));
+                $this->getQueue()->useTube('agent')->put(json_encode($job));
             }
 
         }
@@ -66,7 +58,7 @@ class AgentResponse extends ReconAbstract{
                         "status"        =>  '3',
                         "tracker"       =>  $postData['tracker']
                     );
-                    $this->queue->useTube('agent')->put(json_encode($job));
+                    $this->getQueue()->useTube('agent')->put(json_encode($job));
                     break;
                 case 1 :
                     $job = array(
@@ -76,7 +68,7 @@ class AgentResponse extends ReconAbstract{
                         "status"        =>  '3',
                         "tracker"       =>  $postData['tracker']
                     );
-                    $this->queue->useTube('agent')->put(json_encode($job));
+                    $this->getQueue()->useTube('agent')->put(json_encode($job));
                     break;
                 case 2 :
                     $job = array(
@@ -85,7 +77,7 @@ class AgentResponse extends ReconAbstract{
                         "filesscanned"  =>  $postData['filesscanned'],
                         "tracker"       =>  $postData['tracker']
                     );
-                    $this->queue->useTube('agent')->put(json_encode($job));
+                    $this->getQueue()->useTube('agent')->put(json_encode($job));
                     break;
                 case 3 :
                     $job = array(
@@ -95,7 +87,7 @@ class AgentResponse extends ReconAbstract{
                         "tracker"       =>  $postData['tracker'],
                         "profile"       =>  $postData['profile']
                     );
-                    $this->queue->useTube('agent')->put(json_encode($job));
+                    $this->getQueue()->useTube('agent')->put(json_encode($job));
                     break;
             }
         }

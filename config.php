@@ -14,5 +14,13 @@ return array(
         'database'  =>  'storm_recon',
         'username'  =>  'root',
         'password'  =>  'pa55word'
+    ),
+    'beanstalkd' => array(
+        'hostname'  =>  '127.0.0.1',
+        'port'      =>  '11300'
+    ),
+    'logger'    => array(
+        'location'  =>  __DIR__ . '/logs',
+        'level'     =>  'DEBUG'
     )
 );

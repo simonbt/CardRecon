@@ -17,6 +17,7 @@ class AgentControl extends ReconAbstract{
     protected $configIni;
     protected $ip_address;
 
+
     public function setIP($ip_address)
     {
         $this->ip_address = $ip_address;
@@ -156,7 +157,7 @@ class AgentControl extends ReconAbstract{
 
     public function createHost()
     {
-        $hosts = new Hosts($this->getPdo());
+        $hosts = new Hosts($this->getPdo(), $this->getQueue(), $this->getLogger());
         $hostToAdd = array(
             'host_name'     =>  null,
             'ip_address'    =>  $this->ip_address,
@@ -212,7 +213,7 @@ class AgentControl extends ReconAbstract{
 
     public function setProfileInfo($profileID)
     {
-        $profiles = new Profiles($this->getPdo());
+        $profiles = new Profiles($this->getPdo(), $this->getQueue(), $this->getLogger());
         $profileDetails = $profiles->profileDetails($profileID);
         $this->profile = $profileDetails[0];
     }
@@ -231,7 +232,7 @@ class AgentControl extends ReconAbstract{
 
     private function listRegex()
     {
-        $regex = new Regex($this->getPdo());
+        $regex = new Regex($this->getPdo(), $this->getQueue(), $this->getLogger());
         $regexList = $regex->listRegex();
         $return = "";
 
