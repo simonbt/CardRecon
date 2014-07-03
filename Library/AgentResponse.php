@@ -20,6 +20,7 @@ class AgentResponse extends ReconAbstract{
             foreach ($resultsLine as $result)
             {
                 $job = array(
+                    'action'    =>  '5',
                     'result'    =>  explode("\t", $result),
                     'tracker'   =>  $postData['tracker']
                 );
