@@ -9,7 +9,7 @@
 include_once('Library/bootstrap.php');
 
 //Set profile to use
-$scanner = new \Library\ExistingAgent('1', $pdo, '1');
+$scanner = new \Library\ExistingAgent('1', $pdo, '1', $queue, $logger);
 
 
 //Deploy agent and start scan
