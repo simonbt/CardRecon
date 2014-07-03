@@ -29,32 +29,32 @@ while($job = $queue->reserve()) {
     switch($received['action'])
     {
         case 1:
-            $worker->getLogger()->info('Got update hostname Job', array($job->getId()));
+            $worker->getLogger()->info('Got update hostname Job', array('job_id' => $job->getId()));
             $result = $worker->updateHostName($received['host_name'], $received['tracker']);
             $worker->checkSuccess($result, $job);
             break;
         case 2:
-            $worker->getLogger()->info('Got update host totals job');
+            $worker->getLogger()->info('Got update host totals job', array('job_id' => $job->getId()));
             $result = $worker->updateHostTotals($received['bytestotal'], $received['filestotal'], $received['tracker']);
             $worker->checkSuccess($result, $job);
             break;
         case 3:
-            $worker->getLogger()->info('Got update host progress job');
+            $worker->getLogger()->info('Got update host progress job', array('job_id' => $job->getId()));
             $result = $worker->updateHostProgress($received['bytesscanned'], $received['filesscanned'], $received['tracker']);
             $worker->checkSuccess($result, $job);
             break;
         case 4:
-            $worker->getLogger()->info('Got update host completion job');
+            $worker->getLogger()->info('Got update host completion job', array('job_id' => $job->getId()));
             $result = $worker->hostCompleted($received['bytesscanned'], $received['filesscanned'], $received['tracker'], $received['profile']);
             $worker->checkSuccess($result, $job);
             break;
         case 5:
-            $worker->getLogger()->info('Got add results job');
+            $worker->getLogger()->info('Got add results job', array('job_id' => $job->getId()));
             $result = $worker->addResult($received['result'], $received['tracker']);
             $worker->checkSuccess($result, $job);
             break;
         default:
-            $worker->getLogger()->warning('action not found');
+            $worker->getLogger()->warning('action not found - removing job', array('job_id' => $job->getId()));
             $queue->bury($job);
             break;
     }
