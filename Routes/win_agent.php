@@ -6,7 +6,7 @@
  * Time: 09:03
  */
 
-$agentResponse = new \Library\AgentResponse($pdo);
+$agentResponse = new \Library\AgentResponse($pdo, $queue, $logger);
 
 $app->post('/agent', function() use($app, $agentResponse)
 {
