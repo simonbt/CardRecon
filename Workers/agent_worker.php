@@ -29,27 +29,27 @@ while($job = $queue->reserve()) {
     switch($received['action'])
     {
         case 1:
-            $worker->getLogger()->info('Got update hostname Job', $job->getId());
+            $worker->getLogger()->info('Got update hostname Job', array($job->getId()));
             $result = $worker->updateHostName($received['host_name'], $received['tracker']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         case 2:
-            $worker->getLogger()->info('Got update host totals job', $job->getId());
+            $worker->getLogger()->info('Got update host totals job', array($job->getId()));
             $result = $worker->updateHostTotals($received['bytestotal'], $received['filestotal'], $received['tracker']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         case 3:
-            $worker->getLogger()->info('Got update host progress job', $job->getId());
+            $worker->getLogger()->info('Got update host progress job', array($job->getId()));
             $result = $worker->updateHostProgress($received['bytesscanned'], $received['filesscanned'], $received['tracker']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         case 4:
-            $worker->getLogger()->info('Got update host completion job', $job->getId());
+            $worker->getLogger()->info('Got update host completion job', array($job->getId()));
             $result = $worker->hostCompleted($received['bytesscanned'], $received['filesscanned'], $received['tracker'], $received['profile']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         case 5:
-            $worker->getLogger()->info('Got add results job', $job->getId());
+            $worker->getLogger()->info('Got add results job', array($job->getId()));
             $result = $worker->addResult($received['result'], $received['tracker']);
             $worker->checkSuccess($result, $queue, $job);
             break;
