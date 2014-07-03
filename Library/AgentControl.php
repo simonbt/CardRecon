@@ -136,28 +136,15 @@ class AgentControl extends ReconAbstract{
     {
         $command = $this->profile['path'] . '/sc.exe start OpenDLP';
         $success = $this->winControl($command);
-        if(!$success)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return $success;
     }
 
     public  function stopService()
     {
         $command = $this->profile['path'] . '/sc.exe stop OpenDLP';
         $success = $this->winControl($command);
-        if(!$success)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return $success;
+
     }
 
     public function createHost()
