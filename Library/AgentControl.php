@@ -129,7 +129,7 @@ class AgentControl extends ReconAbstract{
     private function updateStatus($id)
     {
         $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET status =? WHERE tracker =?');
-        $updateProgress->execute(array($id));
+        $updateProgress->execute(array($id, $this->tracker));
     }
 
     public  function startService()
