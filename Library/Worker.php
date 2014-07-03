@@ -11,17 +11,17 @@ namespace Library;
 
 class Worker extends ReconAbstract {
 
-    public function checkSuccess($result, \Pheanstalk_Pheanstalk $queue, $job)
+    public function checkSuccess($result, \Pheanstalk_Pheanstalk $job)
     {
         if ($result)
         {
-            echo "Job completed successfully!\n\n";
-            $queue->delete($job);
+            $this->getLogger()->info('Job completed successfully!');
+            $this->getQueue()->delete($job);
         }
         else
         {
-            echo "Job FAILED! - Returning job into to the queue\n";
-            $queue->bury($job);
+            $this->getLogger()->warning('Job FAILED! - Returning job into to the queue', $result);
+            $this->getQueue()->bury($job);
         }
     }
 

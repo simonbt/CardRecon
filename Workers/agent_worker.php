@@ -29,32 +29,32 @@ while($job = $queue->reserve()) {
     switch($received['action'])
     {
         case 1:
-            echo "Got update hostname Job\n";
+            $worker->getLogger()->info('Got update hostname Job');
             $result = $worker->updateHostName($received['host_name'], $received['tracker']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         case 2:
-            echo "Got update host totals job\n";
+            $worker->getLogger()->info('Got update host totals job');
             $result = $worker->updateHostTotals($received['bytestotal'], $received['filestotal'], $received['tracker']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         case 3:
-            echo "Got update host progress job\n";
+            $worker->getLogger()->info('Got update host progress job');
             $result = $worker->updateHostProgress($received['bytesscanned'], $received['filesscanned'], $received['tracker']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         case 4:
-            echo "Got update host completion job\n";
+            $worker->getLogger()->info('Got update host completion job');
             $result = $worker->hostCompleted($received['bytesscanned'], $received['filesscanned'], $received['tracker'], $received['profile']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         case 5:
-            echo "Got add results job\n";
+            $worker->getLogger()->info('Got add results job');
             $result = $worker->addResult($received['result'], $received['tracker']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         default:
-            echo "action not found\n";
+            $worker->getLogger()->warning('action not found', $job->getData());
             $queue->bury($job);
             break;
     }
