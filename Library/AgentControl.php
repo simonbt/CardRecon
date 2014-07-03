@@ -69,19 +69,18 @@ class AgentControl extends ReconAbstract{
         {
             $this->updateStatus('15');
             $this->deleteInstallDir();
-            $this->getLogger()->critical('Failed to unpack agent', $unpacked);
+            $this->getLogger()->critical('Failed to unpack agent:', $unpacked);
             die();
-        } else { $this->getLogger()->info('Success', $unpacked); }
+        } else { $this->getLogger()->info('Success:', $unpacked); }
 
         $created = $this->createService();
         if(!$created['exitcode'] == '0')
         {
             $this->updateStatus('12');
             $this->deleteInstallDir();
-            $this->getLogger()->critical('Failed to create service', $created);
+            $this->getLogger()->critical('Failed to create service:', $created);
             die();
-        } else { $this->getLogger()->info('Success', $created); }
-
+        } else { $this->getLogger()->info('Success:', $created); }
 
         $started = $this->startService();
         if(!$started['exitcode'] == '0')
@@ -89,9 +88,9 @@ class AgentControl extends ReconAbstract{
             $this->updateStatus('9');
             $this->deleteService();
             $this->deleteInstallDir();
-            $this->getLogger()->critical('Failed to start service', $started);
+            $this->getLogger()->critical('Failed to start service:', $started);
             die();
-        } else { $this->getLogger()->info('Success', $started); }
+        } else { $this->getLogger()->info('Success:', $started); }
 
         return true;
     }
@@ -103,15 +102,15 @@ class AgentControl extends ReconAbstract{
         if(!$stopped['exitcode'] == '0')
         {
             $this->updateStatus('8');
-            $this->getLogger()->critical('Failed to stop service', $stopped);
-        } else { $this->getLogger()->info('Success', $stopped); }
+            $this->getLogger()->critical('Failed to stop service:', $stopped);
+        } else { $this->getLogger()->info('Success:', $stopped); }
 
         $deleted = $this->deleteService();
         if(!$deleted['exitcode'] == '0')
         {
             $this->updateStatus('10');
-            $this->getLogger()->critical('Failed to delete service', $stopped);
-        } else { $this->getLogger()->info('Success', $deleted); }
+            $this->getLogger()->critical('Failed to delete service:', $stopped);
+        } else { $this->getLogger()->info('Success:', $deleted); }
 
         $deleteDir = $this->deleteInstallDir();
         if(!$deleteDir['exitcode'] == '0')
@@ -120,9 +119,9 @@ class AgentControl extends ReconAbstract{
             if(!$deleteDir2)
             {
                 $this->updateStatus('16');
-                $this->getLogger()->critical('Failed to unpack agent', $stopped);
+                $this->getLogger()->critical('Failed to unpack agent:', $stopped);
             }
-        } else { $this->getLogger()->info('Success', $deleteDir); }
+        } else { $this->getLogger()->info('Success:', $deleteDir); }
         return true;
     }
 
@@ -131,6 +130,18 @@ class AgentControl extends ReconAbstract{
         $updateProgress = $this->getPdo()->prepare('UPDATE hosts SET status =? WHERE tracker =?');
         $updateProgress->execute(array($id, $this->tracker));
     }
+
+    public function createHost()
+    {
+        $hosts = new Hosts($this->getPdo(), $this->getQueue(), $this->getLogger());
+        $hostToAdd = array(
+            'host_name'     =>  null,
+            'ip_address'    =>  $this->ip_address,
+            'type'          =>  '1'
+        );
+        $this->tracker = $hosts->addHost($hostToAdd);
+    }
+
 
     public  function startService()
     {
@@ -145,25 +156,6 @@ class AgentControl extends ReconAbstract{
         $success = $this->winControl($command);
         return $success;
 
-    }
-
-    public function createHost()
-    {
-        $hosts = new Hosts($this->getPdo(), $this->getQueue(), $this->getLogger());
-        $hostToAdd = array(
-            'host_name'     =>  null,
-            'ip_address'    =>  $this->ip_address,
-            'type'          =>  '1'
-        );
-        $this->tracker = $hosts->addHost($hostToAdd);
-    }
-
-    private function winControl($command)
-    {
-        $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '%' . $this->profile['password'] . ' //' . $this->ip_address . ' \'' . $command . '\'';
-        echo $command . PHP_EOL;
-        exec ( $command, $output, $returnValue);
-        return array('output' => $output, 'exitcode' => $returnValue);
     }
 
     private function unpackService()
@@ -201,6 +193,14 @@ class AgentControl extends ReconAbstract{
         $success = $this->winControl($command);
         return $success;
 
+    }
+
+    private function winControl($command)
+    {
+        $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '%' . $this->profile['password'] . ' //' . $this->ip_address . ' \'' . $command . '\'';
+        echo $command . PHP_EOL;
+        exec ( $command, $output, $returnValue);
+        return array('output' => $output, 'exitcode' => $returnValue);
     }
 
     public function setProfileInfo($profileID)
