@@ -11,7 +11,7 @@ namespace Library;
 
 class Worker extends ReconAbstract {
 
-    public function checkSuccess($result, \Pheanstalk_Pheanstalk $job)
+    public function checkSuccess($result, $job)
     {
         if ($result)
         {
