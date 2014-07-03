@@ -20,7 +20,6 @@ spl_autoload_register(function($className)
     require($fileName);
 });
 
-
 if (file_exists(__DIR__ . '/../config.php'))
 {
     $config = require(__DIR__ . '/../config.php');
@@ -29,6 +28,8 @@ else
 {
     die('Config.php does not exist');
 }
+
+$logger = new \StormFramework\Logger\ContextLogger($config['logger']['location'], $config['logger']['level']);
 
 try {
     $pdo = new \PDO(
@@ -50,4 +51,3 @@ catch (\Pheanstalk_Exception $queueError)
     print $queueError->getMessage() . PHP_EOL;
 }
 
-$logger = new \StormFramework\Logger\ContextLogger($config['location'], $config['level']);

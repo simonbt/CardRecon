@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'StormFramework\\Logger\\ContextLogger' => $vendorDir . '/stormframework/logger/StormFramework/Logger/ContextLogger.php',
+    'StormFramework\\Logger\\Logger' => $vendorDir . '/stormframework/logger/StormFramework/Logger/Logger.php',
 );

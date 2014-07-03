@@ -6,4 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'StormFramework\\Logger\\' => array($vendorDir . '/stormframework/logger/StormFramework/Logger'),
 );
