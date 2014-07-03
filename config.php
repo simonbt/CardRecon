@@ -21,6 +21,6 @@ return array(
     ),
     'logger'    => array(
         'location'  =>  __DIR__ . '/logs',
-        'level'     =>  'DEBUG'
+        'level'     =>  \Psr\Log\LogLevel::DEBUG
     )
 );
