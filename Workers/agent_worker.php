@@ -30,7 +30,7 @@ while($job = $queue->reserve()) {
     {
         case 1:
             echo "Got update hostname Job\n";
-            $result = $worker->updateHostName($received['hostname'], $received['tracker']);
+            $result = $worker->updateHostName($received['host_name'], $received['tracker']);
             $worker->checkSuccess($result, $queue, $job);
             break;
         case 2:
