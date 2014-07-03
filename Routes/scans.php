@@ -6,7 +6,7 @@
  * Time: 16:28
  */
 
-$scans = new \Library\Scans($pdo);
+$scans = new \Library\Scans($pdo, $queue, $logger);
 
 //List all scans
 $app->get('/scans', function() use($scans)

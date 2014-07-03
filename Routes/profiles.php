@@ -6,7 +6,7 @@
  * Time: 16:28
  */
 
-$profiles = new \Library\Profiles($pdo);
+$profiles = new \Library\Profiles($pdo, $queue, $logger);
 
 //List profiles
 $app->get('/profiles', function() use($profiles)

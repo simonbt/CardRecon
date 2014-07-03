@@ -6,7 +6,7 @@
  * Time: 07:42
  */
 
-$hosts = new \Library\Hosts($pdo);
+$hosts = new \Library\Hosts($pdo, $queue, $pdo);
 
 //List hosts
 $app->get('/hosts', function() use($hosts)

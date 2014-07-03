@@ -6,7 +6,7 @@
  * Time: 16:59
  */
 
-$regex = new \Library\Regex($pdo);
+$regex = new \Library\Regex($pdo, $queue, $logger);
 
 //List regex patterns
 $app->get('/regex', function() use($regex)
