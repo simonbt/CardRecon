@@ -9,18 +9,19 @@
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
 exec("ps aux | grep -i 'agent_worker.php' | grep -v grep", $pids);
-if(empty($pids)) {
-    print "agent worker not running!\n";
-} else {
-    print "agent worker OK\n";
-}
 
 echo '
             <head><meta http-equiv="refresh" content="5" ></head>
             <div class="results">
             <h2>Current Scans</h2>
+
             ';
 
+if(empty($pids)) {
+    echo '<img src="/images/cross.png">Agent Worker Not Running!';
+} else {
+    echo '<img src="/images/tick.png">Agent Worker Running';
+}
 
 
 echo'
