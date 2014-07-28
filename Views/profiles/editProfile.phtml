@@ -10,17 +10,18 @@ include(__DIR__ . '/../includes/menuHeader.phtml');
 
 echo '
 <p class="header">Profiles</p>
-
-<div class="profilesFormContainer">
-    <ul class="profilesForm">
-    <form method="post" action="/profiles/' . $profile['id'] . '">
-
 ';
+
 
 
 foreach ($profiles as $profile) {
 
     echo'
+    <div class="profilesFormContainer">
+    <ul class="profilesForm">
+    <form method="post" action="/profiles/' . $profiles['id'] . '">
+
+
         <li>
             <label>Profile Name</label>
             <input type="text" name="profile_name" value="' . htmlspecialchars($profile['profile_name']) . '">
@@ -101,18 +102,21 @@ foreach ($profiles as $profile) {
             <label>Mask CC Numbers?</label>
             <input type="text" name="mask_data" value="' . htmlspecialchars($profile['mask_data']) . '">
         </li>
-            ';
+        <input type="submit" value="Submit">
+        </form>
+        <form method="get" action="/profiles">
+        <input type="submit" value="Back">
+        </form>
+        </ul>
+
+        </div>';
+
+
+
 }
 
 
-echo '
-<input type="submit" value="Submit">
-</form>
-<form method="get" action="/profiles">
-<input type="submit" value="Back">
-</form>
-</ul>
 
-</div>';
+
 
 include(__DIR__ . '/../includes/footer.phtml');
