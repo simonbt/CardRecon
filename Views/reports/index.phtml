@@ -56,9 +56,9 @@ foreach ($systems as $system)
                 <tr>
                     <td><input type="checkbox" name="falsepositive[]" value="'.$system['tracker'].'">
                     <td>'.$system['host_name'].'</td>
-                    <td>'.$system['filestotal'].'</td>
-                    <td>'.$system['filesscanned'].'</td>
-                    <td>'.$system['bytesscanned'].'</td>
+                    <td>'.number_format($system['filestotal']).'</td>
+                    <td>'.number_format($system['filesscanned']).'</td>
+                    <td>'.number_format($system['bytesscanned']).'</td>
                     <td>'.$system['resultCount'].'</td>
                     '.$link.'
                 </tr>
