@@ -41,7 +41,7 @@ class ReportData extends ReportsAbstract
         return $systems;
     }
 
-    function getResultSystems(\Memcache $memCache)
+    function getResultSystems() //\Memcache $memCache
     {
 
 //        $memCache->connect('localhost', 11211) or die ("Could not connect to the MemCache system");
@@ -59,7 +59,7 @@ class ReportData extends ReportsAbstract
         return $systems;
     }
 
-    function setResultsSystems(\Memcache $memCache)
+    function setResultsSystems() // \Memcache $memCache
     {
 //        $memCache->connect('localhost', 11211) or die ("Could not connect to the MemCache system");
 
