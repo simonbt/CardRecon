@@ -72,10 +72,10 @@ foreach ($files as $file)
 {
     echo'
                 <tr>
-                    <td><input type="checkbox" name="falsepositive[]" value="'.$file['file'].'">
-                    <td>'.$file['file'].'</td>
+                    <td><input type="checkbox" name="falsepositive[]" value="'.$file['filename'].'">
+                    <td>'.$file['filename'].'</td>
                     <td>'.$file['count'].'</td>
-                    <td><a class="myButton2" href ="/details?tracker='.$file['tracker'].'&file='.$file['file'].'&page='.$page.'&total='.$pages.'">View</td>
+                    <td><a class="myButton2" href ="/details?tracker='.$file['tracker'].'&file='.$file['filename'].'&page='.$page.'&total='.$pages.'">View</td>
                 </tr>
     ';
 }

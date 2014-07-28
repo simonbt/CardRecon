@@ -103,7 +103,7 @@ class ReportData extends ReportsAbstract
 
     function getFullResultsForTracker($tracker)
     {
-        $query = $this->getPdo()->prepare('SELECT type, pattern, file, offset, md5 FROM results WHERE tracker =?');
+        $query = $this->getPdo()->prepare('SELECT type, result, filename, offset, md5 FROM results WHERE tracker =?');
         $query->execute([$tracker]);
         $results = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -114,7 +114,7 @@ class ReportData extends ReportsAbstract
     {
         $itemsPerPage = 250;
         $startingFrom = ($page-1) * $itemsPerPage;
-        $query = $this->getPdo()->prepare('SELECT COUNT(file) as count, file, md5, tracker FROM results WHERE tracker =? AND is_false !=1 GROUP BY file LIMIT '.$startingFrom.', '.$itemsPerPage);
+        $query = $this->getPdo()->prepare('SELECT COUNT(filename) as count, filename, md5, tracker FROM results WHERE tracker =? AND is_false !=1 GROUP BY filename LIMIT '.$startingFrom.', '.$itemsPerPage);
         $query->execute([$tracker]);
         $results = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -125,7 +125,7 @@ class ReportData extends ReportsAbstract
     {
         //$itemsPerPage = 50;
         //$startingFrom = ($page-1) * $itemsPerPage;
-        $query = $this->getPdo()->prepare('SELECT COUNT(file) as count, file, md5, tracker FROM results GROUP BY file'); // LIMIT '.$startingFrom.', '.$itemsPerPage);
+        $query = $this->getPdo()->prepare('SELECT COUNT(filename) as count, filename, md5, tracker FROM results GROUP BY file'); // LIMIT '.$startingFrom.', '.$itemsPerPage);
         $query->execute();
         $results = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -134,7 +134,7 @@ class ReportData extends ReportsAbstract
 
     function getFileDetails($tracker, $file)
     {
-        $query = $this->getPdo()->prepare('SELECT type, pattern, file, offset, md5 FROM results WHERE tracker =? AND file =?');
+        $query = $this->getPdo()->prepare('SELECT type, result, filename, offset, md5 FROM results WHERE tracker =? AND file =?');
         $query->execute([$tracker, $file]);
         $results = $query->fetchAll(\PDO::FETCH_ASSOC);
 
