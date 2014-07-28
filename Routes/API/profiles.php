@@ -17,7 +17,6 @@ $app->get('/profiles', function() use($app, $profiles)
 //Get profile details
 $app->get('/profiles/:id', function($id) use($profiles, $app)
 {
-    print_r($profiles->profileDetails($id));die();
     $app->render('profiles/editProfile.phtml', array('profile' => $profiles->profileDetails($id)));
 });
 
