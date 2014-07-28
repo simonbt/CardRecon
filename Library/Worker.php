@@ -20,7 +20,7 @@ class Worker extends ReconAbstract {
         }
         else
         {
-            $this->getLogger()->warning('Job FAILED! - deleting job', $result);
+            $this->getLogger()->warning('Job FAILED! - deleting job', [$result]);
             $this->getQueue()->bury($job);
         }
     }
