@@ -13,17 +13,17 @@ class Profiles extends ReconAbstract{
 
     public function listProfiles()
     {
-        $profilesQuery = $this->getPdo()->prepare('SELECT profile FROM profiles');
+        $profilesQuery = $this->getPdo()->prepare('SELECT number, profile FROM profiles');
         $profilesQuery->execute();
         $profiles = $profilesQuery->fetchAll(\PDO::FETCH_ASSOC);
 
         return $profiles;
     }
 
-    public function profileDetails($profile)
+    public function profileDetails($id)
     {
-        $profileQuery = $this->getPdo()->prepare('SELECT * from profiles where profile =?');
-        $profileQuery->execute(array($profile));
+        $profileQuery = $this->getPdo()->prepare('SELECT * from profiles where number =?');
+        $profileQuery->execute(array($id));
         $profileDetails = $profileQuery->fetchAll(\PDO::FETCH_ASSOC);
 
         return $profileDetails;
