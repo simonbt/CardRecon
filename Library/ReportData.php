@@ -13,7 +13,7 @@ class ReportData extends ReportsAbstract
 
     function markSystemFalsePositive($tracker)
     {
-        $query = $this->getPdo()->prepare('UPDATE systems SET status =9 WHERE tracker =?');
+        $query = $this->getPdo()->prepare('UPDATE hosts SET status =9 WHERE tracker =?');
         $result = $query->execute([$tracker]);
         if (!$result)
         {
@@ -72,7 +72,7 @@ class ReportData extends ReportsAbstract
     {
         $systemCounts = array();
 
-        $systemsQuery = $this->getPdo()->prepare('SELECT system, filestotal, filesdone, bytestotal, bytesdone, tracker FROM systems WHERE status =3 AND scantype =\'win_agent\'');
+        $systemsQuery = $this->getPdo()->prepare('SELECT host_name, filestotal, filesscanned, bytestotal, bytesscanned, tracker FROM hosts WHERE status =3');
         $systemsQuery->execute();
         $systems = $systemsQuery->fetchAll(\PDO::FETCH_ASSOC);
 

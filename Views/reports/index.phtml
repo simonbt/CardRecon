@@ -55,10 +55,10 @@ foreach ($systems as $system)
     echo'
                 <tr>
                     <td><input type="checkbox" name="falsepositive[]" value="'.$system['tracker'].'">
-                    <td>'.$system['system'].'</td>
+                    <td>'.$system['host_name'].'</td>
                     <td>'.$system['filestotal'].'</td>
-                    <td>'.$system['filesdone'].'</td>
-                    <td>'.$system['bytesdone'].'</td>
+                    <td>'.$system['filesscanned'].'</td>
+                    <td>'.$system['bytesscanned'].'</td>
                     <td>'.$system['resultCount'].'</td>
                     '.$link.'
                 </tr>
