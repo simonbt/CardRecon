@@ -44,28 +44,28 @@ class ReportData extends ReportsAbstract
     function getResultSystems(\Memcache $memCache)
     {
 
-        $memCache->connect('localhost', 11211) or die ("Could not connect to the MemCache system");
-
-        $storedQuery = $memCache->get('cache');
-        if ($storedQuery)
-        {
-            return $storedQuery;
-        }
+//        $memCache->connect('localhost', 11211) or die ("Could not connect to the MemCache system");
+//
+//        $storedQuery = $memCache->get('cache');
+//        if ($storedQuery)
+//        {
+//            return $storedQuery;
+//        }
 
         $systems = $this->getSystemsData();
 
-        $memCache->set('cache', $systems, false, 2400) or die ("Ooops memcache set");
+//        $memCache->set('cache', $systems, false, 2400) or die ("Ooops memcache set");
 
         return $systems;
     }
 
     function setResultsSystems(\Memcache $memCache)
     {
-        $memCache->connect('localhost', 11211) or die ("Could not connect to the MemCache system");
+//        $memCache->connect('localhost', 11211) or die ("Could not connect to the MemCache system");
 
         $systems = $this->getSystemsData();
 
-        $memCache->set('cache', $systems, false, 2400) or die ("Ooops memcache set");
+//        $memCache->set('cache', $systems, false, 2400) or die ("Ooops memcache set");
     }
 
     function getSystemsData()

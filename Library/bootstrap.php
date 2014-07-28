@@ -51,13 +51,13 @@ catch (\Pheanstalk_Exception $queueError)
     print $queueError->getMessage() . PHP_EOL;
 }
 
-try
-{
-    $memcache = new Memcache();
-
-} catch (\MemcachedException $memcacheError)
-{
-    print $memcacheError->getMessage() . PHP_EOL;
-}
+//try
+//{
+//    $memcache = new Memcache();
+//
+//} catch (\MemcachedException $memcacheError)
+//{
+//    print $memcacheError->getMessage() . PHP_EOL;
+//}
 
 $reportData = new \Library\ReportData($pdo);
