@@ -34,6 +34,14 @@ echo'
 
 foreach ($currentScans as $system)
 {
+
+    if ($system['status'] == 3)
+    {
+        $status = '<img src="/images/spinner3-black.gif">';
+    } else {
+        $status = $system['status'];
+    }
+
     echo'
                 <tr>
                     <td>'.$system['host_name'].'</td>
@@ -42,7 +50,7 @@ foreach ($currentScans as $system)
                     <td>'.number_format($system['bytestotal']).'</td>
                     <td>'.number_format($system['bytesscanned']).'</td>
                     <td>'.$system['start_time'].'</td>
-                    <td>'.$system['status'].'</td>
+                    <td>'.$status.'</td>
                 </tr>
     ';
 }
