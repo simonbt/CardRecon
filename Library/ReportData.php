@@ -134,7 +134,7 @@ class ReportData extends ReportsAbstract
 
     function getFileDetails($tracker, $file)
     {
-        $query = $this->getPdo()->prepare('SELECT type, result, filename, offset, md5 FROM results WHERE tracker =? AND filename =?');
+        $query = $this->getPdo()->prepare('SELECT regex_name, result, filename, offset, md5 FROM results WHERE tracker =? AND filename =?');
         $query->execute([$tracker, $file]);
         $results = $query->fetchAll(\PDO::FETCH_ASSOC);
 
