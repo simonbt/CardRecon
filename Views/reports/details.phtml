@@ -6,13 +6,11 @@
  * Time: 12:14
  */
 
-echo '  <html>
-            <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-                <link rel="stylesheet" type="text/css" href="/css/main.css">
-                <title>RandomStorm Report Generator</title>
-            </head>
-            <body>
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+
+echo '
+            <div class="results>
             <h2>Details</h2>
             <p>Showing matches for ' . $file . '</p>
 
@@ -40,6 +38,7 @@ foreach ($details as $detail)
 
 echo '
             </table>
-            </body>
-        </html>
+            </div>
     ';
+
+include(__DIR__ . '/../includes/footer.phtml');

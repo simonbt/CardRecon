@@ -6,14 +6,9 @@
  * Time: 12:14
  */
 
+include(__DIR__ . '/../includes/menuHeader.phtml');
 
-echo '  <html>
-            <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-                <link rel="stylesheet" type="text/css" href="/css/main.css">
-                <title>RandomStorm Report Generator</title>
-            </head>
-            <body>
+echo '
             <h2>Affected Files</h2>
             <p>Shown below are a list of files in which we have made a match. Click "View" to show match details</p>
             <p><a  class="myButton" href="/">Back</a></p>
@@ -87,6 +82,7 @@ foreach ($files as $file)
 echo '
 
             </table>
-            </body>
-        </html>
+        </div>
     ';
+
+include(__DIR__ . '/../includes/footer.phtml');
