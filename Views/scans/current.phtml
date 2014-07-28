@@ -8,7 +8,7 @@
 
 include(__DIR__ . '/../includes/menuHeader.phtml');
 
-exec("ps aux | grep -i 'agent_worker.php -D' | grep -v grep", $pids);
+exec("ps aux | grep -i 'agent_worker.php' | grep -v grep", $pids);
 if(empty($pids)) {
     print "agent worker not running!\n";
 } else {
