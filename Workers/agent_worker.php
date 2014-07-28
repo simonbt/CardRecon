@@ -45,7 +45,7 @@ while($job = $queue->reserve()) {
             break;
         case 4:
             $worker->getLogger()->info('Got update host completion job', array('job_id' => $job->getId()));
-            $result = $worker->hostCompleted($received['bytesscanned'], $received['filesscanned'], $received['tracker'], $received['profile']);
+            $result = $worker->hostCompleted($queue, $received['bytesscanned'], $received['filesscanned'], $received['tracker'], $received['profile']);
             $worker->checkSuccess($result, $job);
             break;
         case 5:

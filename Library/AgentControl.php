@@ -119,7 +119,7 @@ class AgentControl extends ReconAbstract{
             if(!$deleteDir2)
             {
                 $this->updateStatus('16');
-                $this->getLogger()->critical('Failed to unpack agent:', $stopped);
+                $this->getLogger()->critical('Failed to delete directory:', $stopped);
             }
         } else { $this->getLogger()->info('Success:', $deleteDir); }
         return true;

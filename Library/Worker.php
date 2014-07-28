@@ -56,7 +56,8 @@ class Worker extends ReconAbstract {
         }
         $profileID = $getProfileID->fetchAll(\PDO::FETCH_COLUMN);
 
-        $this->uninstallAgent($profileID, $this->getPdo(), $hostID, $this->getQueue(), $this->getLogger());
+        $this->uninstallAgent($profileID, $this->getPdo(), $hostID);
+
         return true;
     }
 
