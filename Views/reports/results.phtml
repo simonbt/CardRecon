@@ -43,7 +43,7 @@ while ( $x <= $pages)
             </form></p>
             <form  action="/results" method="post" >
 
-                <p><input class="myButton" type="submit" value="Mark False Positive">
+                <p><input class="myButton2" type="submit" value="Mark False Positive">
                 ';
 
 if (isset($success))
@@ -79,7 +79,7 @@ foreach ($files as $file)
                     <td><input type="checkbox" name="falsepositive[]" value="'.$file['file'].'">
                     <td>'.$file['file'].'</td>
                     <td>'.$file['count'].'</td>
-                    <td><a class="myButton" href ="/details?tracker='.$file['tracker'].'&file='.$file['file'].'&page='.$page.'&total='.$pages.'">View</td>
+                    <td><a class="myButton2" href ="/details?tracker='.$file['tracker'].'&file='.$file['file'].'&page='.$page.'&total='.$pages.'">View</td>
                 </tr>
     ';
 }

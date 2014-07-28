@@ -478,3 +478,40 @@ nav > ul > li > div ul > li > a {
 nav > ul > li > div ul > li:hover > a {
     background-color: rgba( 255, 255, 255, 0.1);
 }
+
+#success {
+    color: #b3d453;
+    font-size: 14px;
+}
+
+#failed {
+    color: red;
+    font-size: 14px;
+}
+
+.myButton2 {
+
+    background-color: #b3d453;
+    border-radius: 5px;
+    border: 1px solid #b3d453;
+    display: inline-block;
+    cursor: pointer;
+    color: #000000;
+    font-family: "HelveticaNeue-Light", sans-serif;
+    font-size: 12px;
+    padding: 1px 10px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #528009;
+}
+
+.myButton2:hover {
+
+    background: linear-gradient(to bottom, gainsboro 5%, white 100%);
+    background-color: gainsboro;
+    border: 1px solid gainsboro;
+}
+
+.myButton2:active {
+    position: relative;
+    top: 1px;
+}
