@@ -1,0 +1,45 @@
+<?php
+/**
+ * OpenDLP Reporter - index.phtml.
+ * User: simonbeattie
+ * Date: 15/07/2014
+ * Time: 12:14
+ */
+
+echo '  <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <link rel="stylesheet" type="text/css" href="/css/main.css">
+                <title>RandomStorm Report Generator</title>
+            </head>
+            <body>
+            <h2>Details</h2>
+            <p>Showing matches for ' . $file . '</p>
+
+            <p><a class="myButton" href="/results?tracker=' . $tracker . '&total='.$total.'&page='.$page.'">Back</a></p>
+            <table>
+            <tr>
+                <th>Type</th>
+                <th>Pattern</th>
+                <th>Offset</th>
+            </tr>
+
+            ';
+
+
+foreach ($details as $detail)
+{
+    echo'
+                <tr>
+                    <td>'.$detail['type'].'</td>
+                    <td>'.$detail['pattern'].'</td>
+                    <td>'.$detail['offset'].'</td>
+                </tr>
+    ';
+}
+
+echo '
+            </table>
+            </body>
+        </html>
+    ';

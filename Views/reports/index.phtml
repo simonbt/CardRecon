@@ -1,0 +1,76 @@
+<?php
+/**
+ * OpenDLP Reporter - index.phtml.
+ * User: simonbeattie
+ * Date: 15/07/2014
+ * Time: 12:14
+ */
+
+echo '  <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <link rel="stylesheet" type="text/css" href="/css/main.css">
+                <title>RandomStorm Report Generator</title>
+            </head>
+            <body>
+            <h2>Systems Scanned</h2>
+            <form  action="/" method="post" >
+            <p><input class="myButton" type="submit" value="Mark False Positive">
+            ';
+
+if (isset($success))
+{
+    echo '<div id="success">Successfully marked false positive</div>';
+}
+elseif (isset($failed))
+{
+    echo '<div id="failed">Failed to mark false positive</div>';
+}
+
+
+echo'
+            </p>
+            <table>
+            <tr>
+                <th>Select</th>
+                <th>System Name</th>
+                <th>Files Found</th>
+                <th>Files Scanned</th>
+                <th>Total Bytes Scanned</th>
+                <th>Affected Files</th>
+
+            </tr>
+
+            ';
+
+
+foreach ($systems as $system)
+{
+    if ($system['resultCount'] == 0)
+    {
+        $link = '<td><a class="myButton" href ="#">No Results</td>';
+    }
+    else
+    {
+        $link = '<td><a class="myButton" href ="/results?tracker='.$system['tracker'].'&total='.ceil($system['resultCount']/250).'&page=1">View</td>';
+    }
+    echo'
+                <tr>
+                    <td><input type="checkbox" name="falsepositive[]" value="'.$system['tracker'].'">
+                    <td>'.$system['system'].'</td>
+                    <td>'.$system['filestotal'].'</td>
+                    <td>'.$system['filesdone'].'</td>
+                    <td>'.$system['bytesdone'].'</td>
+                    <td>'.$system['resultCount'].'</td>
+                    '.$link.'
+                </tr>
+    ';
+}
+
+echo '
+
+            </table>
+            </form>
+            </body>
+        </html>
+    ';

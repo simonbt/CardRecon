@@ -1,0 +1,92 @@
+<?php
+/**
+ * OpenDLP Reporter - index.phtml.
+ * User: simonbeattie
+ * Date: 15/07/2014
+ * Time: 12:14
+ */
+
+
+echo '  <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <link rel="stylesheet" type="text/css" href="/css/main.css">
+                <title>RandomStorm Report Generator</title>
+            </head>
+            <body>
+            <h2>Affected Files</h2>
+            <p>Shown below are a list of files in which we have made a match. Click "View" to show match details</p>
+            <p><a  class="myButton" href="/">Back</a></p>
+            <p><form action="/results" method="get">
+            <input type="hidden" name="tracker" value="'.$tracker.'">
+            <input type="hidden" name="total" value="'.$pages.'">
+            Page <select name="page">
+            ';
+
+            $x=1;
+while ( $x <= $pages)
+{
+    if ($x == $page)
+    {
+        echo '<option selected value="'.$x.'">'.$x.'</option>';
+    }
+    else
+    {
+        echo '<option value="'.$x.'">'.$x.'</option>';
+    }
+
+    $x++;
+}
+
+            echo '</select>
+            <input type="submit">
+            </form></p>
+            <form  action="/results" method="post" >
+
+                <p><input class="myButton" type="submit" value="Mark False Positive">
+                ';
+
+if (isset($success))
+{
+    echo '<div id="success">Successfully marked false positive</div>';
+}
+elseif (isset($failed))
+{
+    echo '<div id="failed">Failed to mark false positive</div>';
+}
+
+
+
+echo '      </p>
+            <input type="hidden" name="tracker" value="'.$tracker.'">
+            <input type="hidden" name="pages" value="'.$pages.'">
+            <input type="hidden" name="page" value="'.$page.'">
+
+            <table class="tableHolder">
+            <tr>
+                <th>Select</th>
+                <th>File Name</th>
+                <th>Items</th>
+            </tr>
+
+            ';
+
+
+foreach ($files as $file)
+{
+    echo'
+                <tr>
+                    <td><input type="checkbox" name="falsepositive[]" value="'.$file['file'].'">
+                    <td>'.$file['file'].'</td>
+                    <td>'.$file['count'].'</td>
+                    <td><a class="myButton" href ="/details?tracker='.$file['tracker'].'&file='.$file['file'].'&page='.$page.'&total='.$pages.'">View</td>
+                </tr>
+    ';
+}
+
+echo '
+
+            </table>
+            </body>
+        </html>
+    ';

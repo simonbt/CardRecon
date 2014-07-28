@@ -19,5 +19,6 @@ include_once('Routes/API/scans.php');
 include_once('Routes/API/hosts.php');
 include_once('Routes/API/win_agent.php');
 include_once('Routes/Interface/menus.php');
+include_once('Routes/Interface/reports.php');
 
 $app->run();

@@ -51,3 +51,4 @@ catch (\Pheanstalk_Exception $queueError)
     print $queueError->getMessage() . PHP_EOL;
 }
 
+$reportData = new \Library\ReportData($pdo);
