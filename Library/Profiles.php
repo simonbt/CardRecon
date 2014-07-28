@@ -13,7 +13,7 @@ class Profiles extends ReconAbstract{
 
     public function listProfiles()
     {
-        $profilesQuery = $this->getPdo()->prepare('SELECT id, profile_name, scantype  FROM profiles');
+        $profilesQuery = $this->getPdo()->prepare('SELECT id, profile_name FROM profiles');
         $profilesQuery->execute();
         $profiles = $profilesQuery->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -32,7 +32,28 @@ class Profiles extends ReconAbstract{
 
     public function addProfile($postData)
     {
-        $profileFields = array('profile_name', 'scantype', 'username', 'password', 'domain');
+        $profileFields = array(
+            'profile_name',
+            'username',
+            'password',
+            'domain',
+            'exts',
+            'ignore_exts',
+            'dirs',
+            'ignore_dirs',
+            'regex',
+            'path',
+            'serverurl',
+            'serveruser',
+            'serverpass',
+            'service_description',
+            'debug_level',
+            'concurrent_deployments',
+            'creditcards',
+            'zipfiles',
+            'memory',
+            'mask_data'
+        );
 
         foreach ($profileFields as $key)
         {
@@ -42,8 +63,8 @@ class Profiles extends ReconAbstract{
             }
         }
 
-        $profileQuery = $this->getPdo()->prepare('INSERT INTO profiles (profile_name, scantype, username, password, domain) VALUES(?, ?, ?, ?, ?)');
-        $response = $profileQuery->execute(array($postData['profile_name'], $postData['scantype'], $postData['username'], $postData['password'], $postData['domain']));
+        $profileQuery = $this->getPdo()->prepare('INSERT INTO profiles (profile_name, username, password, domain, exts, ignore_exts, dirs, ignore_dirs, regex, path, serverurl, serveruser, serverpass, service_description, debug_level, concurrent_deployments, creditcards ,zipfiles, memory, mask_data) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $response = $profileQuery->execute(array_values($postData));
 
         if (!$response)
         {

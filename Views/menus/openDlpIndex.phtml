@@ -1,0 +1,32 @@
+<?php
+/**
+ * nessus-report-parser -- openDlpIndex.phtml
+ * User: Simon Beattie
+ * Date: 11/06/2014
+ * Time: 12:26
+ */
+
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+echo '
+<p class="header">Imported OpenDLP Reports</p>
+
+<div class="reportFormContainer">
+    <ul class="reportForm">
+';
+    foreach ($reports as $name => $hash) {
+        echo '
+        <li>
+            <label>' . htmlspecialchars($name) . '</label>
+            <select onchange="location = this.options[this.selectedIndex].value; loadingScreen()">
+                <option selected> Select Report </option>
+                <option value="/opendlp/' . $name . '">OpenDLP Overview Report</option>
+            </select>
+        </li>
+            ';
+    }
+echo '</ul>
+</div>';
+
+include(__DIR__ . '/../includes/footer.phtml');
+

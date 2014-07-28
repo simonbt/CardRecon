@@ -1,0 +1,24 @@
+<?php
+/**
+ * nessus-report-parser -- index.phtml
+ * User: Simon Beattie
+ * Date: 12/06/2014
+ * Time: 16:09
+ */
+
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+echo '
+<p class="header" >Welcome to the RandomStorm Reconnaissance Scanner, ' . htmlspecialchars($_SESSION['name']) . '</p>
+<p>Credit Card Discovery</p>
+';
+
+echo'
+<div id="updateListBox">
+    <div id="updateList">
+
+    </div>
+</div>
+';
+
+include(__DIR__ . '/../includes/footer.phtml');

@@ -1,0 +1,46 @@
+<?php
+/**
+ * StormRecon - profiles.phtml.
+ * User: simonbeattie
+ * Date: 03/07/2014
+ * Time: 12:43
+ */
+
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+if ($success)
+{
+    if (array_key_exists('deleted', $success))
+    {
+        $result = '<p><a class="green">File successfully deleted</a></p>';
+    }
+}
+
+echo '
+<p class="header">Profiles</p>
+
+<div class="reportFormContainer">
+    <ul class="reportForm">
+
+';
+if(isset($result)){echo $result;};
+foreach ($profiles as $profile) {
+
+    echo '
+
+        <li>
+            <form method="get" action="/profiles/' . $profile['id'] . '">
+            <label>' . htmlspecialchars($profile['profile_name']) . '</label>
+                <input type="submit" value="View/Edit">
+            </form>
+            <form method="post" action="/profiles/delete/' . $profile['id'] . '">
+                <input type="submit" value="Delete">
+            </form>
+        </li>
+            ';
+}
+echo '</ul>
+</div>';
+
+include(__DIR__ . '/../includes/footer.phtml');
+

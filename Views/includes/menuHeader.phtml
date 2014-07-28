@@ -1,0 +1,83 @@
+<?php
+/**
+ * nessus-report-parser -- header.phtml
+ * User: Simon Beattie
+ * Date: 12/06/2014
+ * Time: 16:18
+ */
+
+//if (!array_key_exists('name', $_SESSION))
+//{
+//    $username = 'Not Logged In';
+//}
+//else
+//{
+//    $username = htmlspecialchars($_SESSION['name']);
+//}
+
+echo '  <html>
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <link rel="stylesheet" type="text/css" href="/css/main.css">
+                <title>StormRecon</title>
+            </head>
+            <body>
+                <div class="menu" ><a href="/"><img src="/images/logo.png" alt="RandomStorm Limited" /></a>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>
+                                <a href="#">Regex<span class="caret"></span></a>
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <a href="/regex">View Regex Patterns</a>
+                                        </li>
+                                        <li>
+                                            <a href="/addregex">Add Regex</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">Profiles<span class="caret"></span></a>
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <a href="/profiles">View Profiles</a>
+                                        </li>
+                                        <li>
+                                            <a href="/addprofile">Add Profile</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">Scans<span class="caret"></span></a>
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <a href="#">View Scans</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Create Scan</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">Reports<span class="caret"></span></a>
+                                <div>
+                                    <ul>
+                                        <li>
+                                            <a href="#">View Reports</a>
+                                        <li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+';

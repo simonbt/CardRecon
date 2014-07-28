@@ -1,0 +1,118 @@
+<?php
+/**
+ * StormRecon - editProfile.phtml.
+ * User: simonbeattie
+ * Date: 03/07/2014
+ * Time: 13:18
+ */
+
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+echo '
+<p class="header">Profiles</p>
+
+<div class="profilesFormContainer">
+    <ul class="profilesForm">
+    <form method="post" action="/profiles/' . $profile['id'] . '">
+
+';
+
+
+foreach ($profiles as $profile) {
+
+    echo'
+        <li>
+            <label>Profile Name</label>
+            <input type="text" name="profile_name" value="' . htmlspecialchars($profile['profile_name']) . '">
+        </li>
+        <li>
+            <label>Username</label>
+            <input type="text" name="username" value="' . htmlspecialchars($profile['username']) . '">
+        </li>
+        <li>
+            <label>Password</label>
+            <input type="password" name="password" value="' . htmlspecialchars($profile['password']) . '">
+        </li>
+        <li>
+            <label>Domain</label>
+            <input type="text" name="domain" value="' . htmlspecialchars($profile['domain']) . '">
+        </li>
+        <li>
+            <label>Extensions</label>
+            <input type="text" name="exts" value="' . htmlspecialchars($profile['exts']) . '">
+        </li>
+        <li>
+            <label>Extensions Action</label>
+            <input type="text" name="ignore_exts" value="' . htmlspecialchars($profile['ignore_exts']) . '">
+        </li>
+        <li>
+            <label>Directories</label>
+            <input type="text" name="dirs" value="' . htmlspecialchars($profile['dirs']) . '">
+        </li>
+        <li>
+            <label>Directories Action</label>
+            <input type="text" name="ignore_dirs" value="' . htmlspecialchars($profile['ignore_dirs']) . '">
+        </li>
+        <li>
+            <label>Regex Patterns</label>
+            <input type="text" name="regex" value="' . htmlspecialchars($profile['regex']) . '">
+        </li>
+        <li>
+            <label>Agent Path</label>
+            <input type="text" name="path" value="' . htmlspecialchars($profile['path']) . '">
+        </li>
+        <li>
+            <label>StormRecon URL</label>
+            <input type="text" name="serverurl" value="' . htmlspecialchars($profile['serverurl']) . '">
+        </li>
+        <li>
+            <label>StormRecon Username</label>
+            <input type="text" name="serveruser" value="' . htmlspecialchars($profile['serveruser']) . '">
+        </li>
+        <li>
+            <label>StormRecon Password</label>
+            <input type="password" name="serverpass" value="' . htmlspecialchars($profile['serverpass']) . '">
+        </li>
+        <li>
+            <label>Service Description</label>
+            <input type="text" name="service_description" value="' . htmlspecialchars($profile['service_description']) . '">
+        </li>
+        <li>
+            <label>Debug Level</label>
+            <input type="text" name="debug_level" value="' . htmlspecialchars($profile['debug_level']) . '">
+        </li>
+                <li>
+            <label>Concurrent Deployments</label>
+            <input type="text" name="concurrent_deployments" value="' . htmlspecialchars($profile['concurrent_deployments']) . '">
+        </li>
+                <li>
+            <label>Credit Cards</label>
+            <input type="text" name="creditcards" value="' . htmlspecialchars($profile['creditcards']) . '">
+        </li>
+                <li>
+            <label>Zip Files</label>
+            <input type="text" name="zipfiles" value="' . htmlspecialchars($profile['zipfiles']) . '">
+        </li>
+                <li>
+            <label>Memory Usage</label>
+            <input type="text" name="memory" value="' . htmlspecialchars($profile['memory']) . '">
+        </li>
+                <li>
+            <label>Mask CC Numbers?</label>
+            <input type="text" name="mask_data" value="' . htmlspecialchars($profile['mask_data']) . '">
+        </li>
+            ';
+}
+
+
+echo '
+<input type="submit" value="Submit">
+</form>
+<form method="get" action="/profiles">
+<input type="submit" value="Back">
+</form>
+</ul>
+
+</div>';
+
+include(__DIR__ . '/../includes/footer.phtml');

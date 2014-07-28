@@ -1,0 +1,480 @@
+body {
+    background-color: #EBE8E4;
+    color: #222;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+p {
+    text-align: center;
+}
+
+.fileMenu {
+    position: relative;
+    width: 480px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.fileMenu input[type=submit] {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 10pt;
+    width: 150px;
+    height: 30px;
+    padding:5px 15px;
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+}
+.fileMenu input[type=submit]:hover {
+    background:#666666;
+}
+
+.fileMenu table {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.vulnFormContainer {
+    position: relative;
+    width: 2000px;
+    margin: 0 auto;
+}
+
+.vulnForm li {
+    height: 30px;
+    list-style: none;
+}
+.vulnForm label {
+    display: inline-block;
+    width: 35%;
+    text-align: right;
+    margin-right: 20px;
+}
+
+.vulnForm select {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 8.0pt;
+    border: 1px solid #cccccc;
+}
+.vulnForm input[type=submit] {
+    display: inline-block;
+}
+
+.reportFormContainer {
+    position: relative;
+    width: 700px;
+    margin: 0 auto;
+}
+
+.reportForm li {
+    height: 30px;
+    list-style: none;
+}
+
+.reportForm label {
+    display: inline-block;
+    width: 45%;
+    text-align: right;
+    margin-right: 20px;
+}
+
+.reportForm form {
+    display: inline;
+}
+
+.reportForm input[type=submit] {
+    display: inline-block;
+}
+
+.profilesFormContainer {
+    position: relative;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.profilesForm li {
+    height: 30px;
+    list-style: none;
+}
+
+.profilesForm label {
+    display: inline-block;
+    width: 45%;
+    text-align: right;
+    margin-right: 20px;
+}
+
+.profilesForm input[type=submit] {
+    display: inline-block;
+}
+.profilesForm input[type=text] {
+    width: 400px;
+}
+.profilesForm input[type=submit] {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    height: 30px;
+    padding:5px 15px;
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+}
+
+.regexFormContainer {
+    position: relative;
+    width: 800px;
+    margin: 0 auto;
+}
+
+.regexForm li {
+    height: 30px;
+    list-style: none;
+}
+
+.regexForm input[type=text] {
+     width: 500px;
+ }
+
+.regexForm input.smaller{
+    width: 200px;
+}
+
+.regexForm input[type=submit] {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    height: 30px;
+    padding:5px 15px;
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+}
+
+
+
+.form li {
+    height: 60px;
+    list-style: none;
+}
+
+.form label{
+    display: inline-block;
+    width: 130px;
+}
+
+.userForm {
+    position: relative;
+    width: 400px;
+    margin: 0 auto;
+
+}
+.userForm input[type=text] {
+    width: 200px;
+    height: 30px;
+}
+.userForm input[type=password] {
+    width: 200px;
+    height: 30px;
+}
+.userForm input[type=number] {
+    width: 50px;
+    height: 30px;
+}
+
+.userForm input[type=submit] {
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+    height: 30px;
+    padding:5px 15px;
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.userForm input[type=submit]:hover {
+    background:#666666;
+}
+
+.userForm input[type=range]
+{
+    display: block;
+    margin: 0 auto;
+    width:300px;
+}
+
+#updateListBox {
+    position: relative;
+    left: 30%;
+    right: 30%;
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+#updateList {
+    text-align: left;
+}
+
+
+
+#footer {
+    color: black;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 9.0pt;
+    text-align: center;
+}
+
+.menu {
+    text-align: center;
+    color: black;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 12.0pt;
+
+}
+
+.report {
+    color: black;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 12.0pt;
+}
+
+.header {
+    color: black;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 12.0pt;
+}
+
+hr {
+    height: 10px;
+    color: #74b807;
+    background-color: #74b807;
+}
+
+td {
+    padding-top: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+    color: black;
+    font-style: normal;
+    text-decoration: none;
+    vertical-align: top;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    font-size: 9.0pt;
+    border: solid 1pt gray;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.red {
+    color: #FF0003;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
+}
+
+.orange {
+    color: #FF6F00;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
+}
+
+.green {
+    color: limegreen;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
+}
+
+.blue {
+    color: dodgerblue;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
+}
+
+.black {
+    color: black;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
+}
+
+.pass {
+    color: limegreen;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
+}
+
+.fail {
+    color: #FF0003;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+    vertical-align: bottom;
+    font-size: 9.0pt;
+}
+
+.myButton {
+
+    width: 130px;
+    background: linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+    background-color: #89c403;
+    border-radius: 6px;
+    border: 1px solid #74b807;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: "HelveticaNeue-Light", sans-serif;
+    font-size: 14px;
+    padding: 4px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #528009;
+}
+
+.myButton:hover {
+
+    background: linear-gradient(to bottom, #77a809 5%, #89c403 100%);
+    background-color: #77a809;
+}
+
+.myButton:active {
+    position: relative;
+    top: 1px;
+}
+
+nav {
+    font-size: 15px;
+    background-color: #fff;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
+    color: #888;
+    display: block;
+    margin: 8px 22px 8px 22px;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    position: relative;
+    display: inline-block;
+    list-style-type: none;
+
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+    z-index: 1000;
+
+}
+
+nav > ul > li > a > .caret {
+    border-top: 4px solid #aaa;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    content: "";
+    display: inline-block;
+    height: 0;
+    width: 0;
+    vertical-align: middle;
+    margin-left: 6px;
+
+    -webkit-transition: color 0.1s linear;
+    -moz-transition: color 0.1s linear;
+    -o-transition: color 0.1s linear;
+    transition: color 0.1s linear;
+    z-index: 1000;
+
+}
+
+nav > ul > li > a {
+    color: #aaa;
+    display: block;
+    line-height: 56px;
+    padding: 0 24px;
+    text-decoration: none;
+    z-index: 1000;
+
+}
+
+nav > ul > li:hover {
+    background-color: rgb( 40, 44, 47 );
+    z-index: 1000;
+
+}
+
+nav > ul > li:hover > a {
+    color: rgb( 255, 255, 255 );
+    z-index: 1000;
+
+}
+
+nav > ul > li:hover > a > .caret {
+    border-top-color: rgb( 255, 255, 255 );
+    z-index: 1000;
+
+}
+
+nav > ul > li > div {
+    background-color: rgb( 40, 44, 47 );
+    border-top: 0;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.055);
+    display: none;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50px;
+    visibility: hidden;
+
+    -webkit-transiton: opacity 0.2s;
+    -moz-transition: opacity 0.2s;
+    -ms-transition: opacity 0.2s;
+    -o-transition: opacity 0.2s;
+    -transition: opacity 0.2s;
+    z-index: 1000;
+
+}
+
+nav > ul > li:hover > div {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    z-index: 1000;
+
+}
+
+nav > ul > li > div ul > li {
+    display: block;
+}
+
+nav > ul > li > div ul > li > a {
+    color: #fff;
+    display: block;
+    padding: 12px 24px;
+    text-decoration: none;
+}
+
+nav > ul > li > div ul > li:hover > a {
+    background-color: rgba( 255, 255, 255, 0.1);
+}

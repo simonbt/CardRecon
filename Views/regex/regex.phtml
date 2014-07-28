@@ -1,0 +1,52 @@
+<?php
+/**
+ * StormRecon - editProfile.phtml.
+ * User: simonbeattie
+ * Date: 03/07/2014
+ * Time: 13:18
+ */
+
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+if ($success)
+{
+    if ($success == 'added')
+    {
+        $result = '<p><a class="green">Pattern successfully added</a></p>';
+    }
+}
+
+echo '
+<p class="header">Regex Patterns</p>
+
+<div class="regexFormContainer">
+    <ul class="regexForm">
+    <form method="post" action="/regex' . $regex['id'] . '">
+
+';
+
+if(isset($result)){echo $result;};
+foreach ($profiles as $profile) {
+
+    echo'
+        <li>
+            <input class="smaller" type="text" name="name" value="' . htmlspecialchars($profile['name']) . '">
+            <input type="text" name="pattern" value="' . htmlspecialchars($profile['pattern']) . '">
+        </li>
+
+            ';
+}
+
+
+
+//<input type="submit" value="Submit">
+echo '
+</form>
+<form method="get" action="/">
+<input type="submit" value="Back">
+</form>
+</ul>
+
+</div>';
+
+include(__DIR__ . '/../includes/footer.phtml');

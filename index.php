@@ -14,10 +14,11 @@ $app = new \Slim\Slim(array(
 
 session_start();
 
-include_once('Routes/profiles.php');
-include_once('Routes/regex.php');
-include_once('Routes/scans.php');
-include_once('Routes/hosts.php');
-include_once('Routes/win_agent.php');
+include_once('Routes/API/profiles.php');
+include_once('Routes/API/regex.php');
+include_once('Routes/API/scans.php');
+include_once('Routes/API/hosts.php');
+include_once('Routes/API/win_agent.php');
+include_once('Routes/Interface/menus.php');
 
 $app->run();

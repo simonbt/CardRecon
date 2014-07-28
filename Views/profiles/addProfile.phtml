@@ -1,0 +1,107 @@
+<?php
+/**
+ * StormRecon - editProfile.phtml.
+ * User: simonbeattie
+ * Date: 03/07/2014
+ * Time: 13:18
+ */
+
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+echo '
+<p class="header">Profiles</p>
+
+<div class="profilesFormContainer">
+    <ul class="profilesForm">
+    <form method="post" action="/profiles">
+
+        <li>
+            <label>Profile Name</label>
+            <input type="text" name="profile_name" value="">
+        </li>
+        <li>
+            <label>Username</label>
+            <input type="text" name="username" value="">
+        </li>
+        <li>
+            <label>Password</label>
+            <input type="password" name="password" value="">
+        </li>
+        <li>
+            <label>Domain</label>
+            <input type="text" name="domain" value="">
+        </li>
+        <li>
+            <label>Extensions</label>
+            <input type="text" name="exts" value="">
+        </li>
+        <li>
+            <label>Extensions Action</label>
+            <input type="text" name="ignore_exts" value="">
+        </li>
+        <li>
+            <label>Directories</label>
+            <input type="text" name="dirs" value="">
+        </li>
+        <li>
+            <label>Directories Action</label>
+            <input type="text" name="ignore_dirs" value="">
+        </li>
+        <li>
+            <label>Regex Patterns</label>
+            <input type="text" name="regex" value="">
+        </li>
+        <li>
+            <label>Agent Path</label>
+            <input type="text" name="path" value="">
+        </li>
+        <li>
+            <label>StormRecon URL</label>
+            <input type="text" name="serverurl" value="">
+        </li>
+        <li>
+            <label>StormRecon Username</label>
+            <input type="text" name="serveruser" value="">
+        </li>
+        <li>
+            <label>StormRecon Password</label>
+            <input type="password" name="serverpass" value="">
+        </li>
+        <li>
+            <label>Service Description</label>
+            <input type="text" name="service_description" value="">
+        </li>
+        <li>
+            <label>Debug Level</label>
+            <input type="text" name="debug_level" value="">
+        </li>
+                <li>
+            <label>Concurrent Deployments</label>
+            <input type="text" name="concurrent_deployments" value="">
+        </li>
+                <li>
+            <label>Credit Cards</label>
+            <input type="text" name="creditcards" value="">
+        </li>
+                <li>
+            <label>Zip Files</label>
+            <input type="text" name="zipfiles" value="">
+        </li>
+                <li>
+            <label>Memory Usage</label>
+            <input type="text" name="memory" value="">
+        </li>
+                <li>
+            <label>Mask CC Numbers?</label>
+            <input type="text" name="mask_data" value="">
+        </li>
+<input type="submit" value="Submit">
+</form>
+<form method="get" action="/">
+<input type="submit" value="Back">
+</form>
+</ul>
+
+</div>';
+
+include(__DIR__ . '/../includes/footer.phtml');
