@@ -22,7 +22,9 @@ echo'
                 <th>System Name</th>
                 <th>Files Found</th>
                 <th>Files Scanned</th>
-                <th>Total Bytes Scanned</th>
+                <th>Bytes Founds</th>
+                <th>Bytes Scanned</th>
+                <th>Scan Started</th>
                 <th>Status</th>
 
             </tr>
@@ -30,14 +32,16 @@ echo'
             ';
 
 
-foreach ($systems as $system)
+foreach ($currentScans as $system)
 {
     echo'
                 <tr>
                     <td>'.$system['host_name'].'</td>
                     <td>'.number_format($system['filestotal']).'</td>
                     <td>'.number_format($system['filesscanned']).'</td>
+                    <td>'.number_format($system['bytestotal']).'</td>
                     <td>'.number_format($system['bytesscanned']).'</td>
+                    <td>'.$system['start_time'].'</td>
                     <td>'.$system['status'].'</td>
                 </tr>
     ';

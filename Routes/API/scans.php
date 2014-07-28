@@ -14,9 +14,9 @@ $app->get('/scans', function() use($scans)
     print_r($scans->listScans());
 });
 
-$app->get('/current', function() use($scans)
+$app->get('/current', function() use($scans, $app)
 {
-    print_r($scans->listCurrentHosts());
+    $app->render('scans/current.phtml', array('currentScans' => $scans->listCurrentHosts()));
 });
 
 //Add new Scan
