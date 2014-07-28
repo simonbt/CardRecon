@@ -72,7 +72,7 @@ class ReportData extends ReportsAbstract
     {
         $systemCounts = array();
 
-        $systemsQuery = $this->getPdo()->prepare('SELECT host_name, filestotal, filesscanned, bytestotal, bytesscanned, tracker FROM hosts WHERE status =4');
+        $systemsQuery = $this->getPdo()->prepare('SELECT host_name, filestotal, filesscanned, bytestotal, bytesscanned, tracker, end_time FROM hosts WHERE status =4');
         $systemsQuery->execute();
         $systems = $systemsQuery->fetchAll(\PDO::FETCH_ASSOC);
 
