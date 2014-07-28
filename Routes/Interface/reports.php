@@ -39,7 +39,7 @@ $app->get('/reports/cache', function () use($app, $reportData, $memcache)
 {
     $reportData->setResultsSystems($memcache);
     $systems = $reportData->getResultSystems($memcache);
-    $app->render('index.phtml', array('systems' => $systems));
+    $app->render('reports/index.phtml', array('systems' => $systems));
 });
 
 $app->post('/results', function () use($app, $reportData, $memcache)
@@ -50,7 +50,7 @@ $app->post('/results', function () use($app, $reportData, $memcache)
     if (!array_key_exists('falsepositive', $post))
     {
         $files = $reportData->getLessResultsForTracker($post['tracker'], $post['page']);
-        $app->render('results.phtml', array('files' => $files, 'page' => $post['page'], 'pages' =>  $post['pages'], 'tracker' => $post['tracker'], 'failed' => '1'));
+        $app->render('reports/results.phtml', array('files' => $files, 'page' => $post['page'], 'pages' =>  $post['pages'], 'tracker' => $post['tracker'], 'failed' => '1'));
         return;
     }
 
@@ -61,7 +61,7 @@ $app->post('/results', function () use($app, $reportData, $memcache)
 
     $files = $reportData->getLessResultsForTracker($post['tracker'], $post['page']);
     $reportData->setResultsSystems($memcache);
-    $app->render('results.phtml', array('files' => $files, 'page' => $post['page'], 'pages' =>  $post['pages'], 'tracker' => $post['tracker'], 'success' => '1'));
+    $app->render('reports/results.phtml', array('files' => $files, 'page' => $post['page'], 'pages' =>  $post['pages'], 'tracker' => $post['tracker'], 'success' => '1'));
 
 
 });
@@ -72,7 +72,7 @@ $app->get('/results', function () use($app, $reportData)
     $totalPages = $tracker['total'];
     $files = $reportData->getLessResultsForTracker($tracker['tracker'], $tracker['page']);
 
-    $app->render('results.phtml', array('files' => $files, 'page' => $tracker['page'], 'pages' =>  $totalPages, 'tracker' => $tracker['tracker']));
+    $app->render('reports/results.phtml', array('files' => $files, 'page' => $tracker['page'], 'pages' =>  $totalPages, 'tracker' => $tracker['tracker']));
 
 });
 
@@ -80,7 +80,7 @@ $app->get('/details', function () use($app, $reportData)
 {
     $get = $app->request()->get();
     $files = $reportData->getFileDetails($get['tracker'], $get['file']);
-    $app->render('details.phtml', array('details' => $files, 'file' => $get['file'], 'tracker' => $get['tracker'], 'page' => $get['page'], 'total' => $get['total']));
+    $app->render('reports/details.phtml', array('details' => $files, 'file' => $get['file'], 'tracker' => $get['tracker'], 'page' => $get['page'], 'total' => $get['total']));
 
 });
 
