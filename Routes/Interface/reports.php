@@ -10,7 +10,6 @@ $app->get('/reports', function () use($app, $reportData, $memcache)
 {
     $systems = $reportData->getResultSystems($memcache);
 
-    //echo '<pre>';print_r($systems);echo'</pre>';die();
     $app->render('reports/index.phtml', array('systems' => $systems));
 });
 
