@@ -30,7 +30,7 @@ foreach ($profiles as $profile) {
 
         <li>
             <form method="get" action="/profiles/' . $profile['id'] . '">
-            <label>' . htmlspecialchars($profile['id']) . '</label>
+            <label>' . htmlspecialchars($profile['profile_name']) . '</label>
                 <input type="submit" value="View/Edit">
             </form>
             <form method="post" action="/profiles/delete/' . $profile['id'] . '">
