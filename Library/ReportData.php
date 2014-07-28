@@ -76,7 +76,7 @@ class ReportData extends ReportsAbstract
         $systemsQuery->execute();
         $systems = $systemsQuery->fetchAll(\PDO::FETCH_ASSOC);
 
-        $countQuery = $this->getPdo()->prepare('SELECT COUNT(DISTINCT file) FROM results WHERE tracker =? AND is_false !=1');
+        $countQuery = $this->getPdo()->prepare('SELECT COUNT(DISTINCT file_name) FROM results WHERE tracker =? AND is_false !=1');
 
         foreach ($systems as $system)
         {
