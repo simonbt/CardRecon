@@ -10,8 +10,6 @@ namespace Library;
 
 class Scans extends ReconAbstract{
 
-
-
     public function listScans()
     {
         $scansQuery = $this->getPdo()->prepare('SELECT * FROM scan');
