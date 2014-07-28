@@ -29,11 +29,11 @@ foreach ($profiles as $profile) {
     echo '
 
         <li>
-            <form method="get" action="/profiles/' . $profile['id'] . '">
-            <label>' . htmlspecialchars($profile['profile_name']) . '</label>
+            <form method="get" action="/profiles/' . $profile['profile'] . '">
+            <label>' . htmlspecialchars($profile['profile']) . '</label>
                 <input type="submit" value="View/Edit">
             </form>
-            <form method="post" action="/profiles/delete/' . $profile['id'] . '">
+            <form method="post" action="/profiles/delete/' . $profile['profile'] . '">
                 <input type="submit" value="Delete">
             </form>
         </li>

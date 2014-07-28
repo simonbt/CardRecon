@@ -15,7 +15,6 @@ $app = new \Slim\Slim(array(
 session_start();
 
 include_once('Routes/API/profiles.php');
-include_once('Routes/API/regex.php');
 include_once('Routes/API/scans.php');
 include_once('Routes/API/hosts.php');
 include_once('Routes/API/win_agent.php');
