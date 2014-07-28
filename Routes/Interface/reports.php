@@ -11,7 +11,7 @@ $app->get('/reports', function () use($app, $reportData, $memcache)
     $systems = $reportData->getResultSystems($memcache);
 
     //echo '<pre>';print_r($systems);echo'</pre>';die();
-    $app->render('index.phtml', array('systems' => $systems));
+    $app->render('reports/index.phtml', array('systems' => $systems));
 });
 
 $app->post('/reports', function () use($app, $reportData, $memcache)
@@ -22,7 +22,7 @@ $app->post('/reports', function () use($app, $reportData, $memcache)
 
     if (!array_key_exists('falsepositive', $post))
     {
-        $app->render('index.phtml', array('systems' => $systems, 'failed' => '1'));
+        $app->render('reports/index.phtml', array('systems' => $systems, 'failed' => '1'));
         return;
     }
 
@@ -31,7 +31,7 @@ $app->post('/reports', function () use($app, $reportData, $memcache)
         $reportData->markSystemFalsePositive($tracker);
     }
 
-    $app->render('index.phtml', array('systems' => $systems, 'success' => '1'));
+    $app->render('reports/index.phtml', array('systems' => $systems, 'success' => '1'));
 
 });
 
