@@ -14,6 +14,11 @@ $app->get('/scans', function() use($scans)
     print_r($scans->listScans());
 });
 
+$app->get('/current', function() use($scans)
+{
+    print_r($scans->listCurrentHosts());
+});
+
 //Add new Scan
 $app->post('/scans', function() use($app, $scans)
 {

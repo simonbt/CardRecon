@@ -1,0 +1,53 @@
+<?php
+/**
+ * OpenDLP Reporter - index.phtml.
+ * User: simonbeattie
+ * Date: 15/07/2014
+ * Time: 12:14
+ */
+
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+echo '
+            <div class="results">
+            ';
+
+
+
+echo'
+            </p>
+            <table>
+            <tr>
+
+                <th>System Name</th>
+                <th>Files Found</th>
+                <th>Files Scanned</th>
+                <th>Total Bytes Scanned</th>
+                <th>Status</th>
+
+            </tr>
+
+            ';
+
+
+foreach ($systems as $system)
+{
+    echo'
+                <tr>
+                    <td>'.$system['host_name'].'</td>
+                    <td>'.number_format($system['filestotal']).'</td>
+                    <td>'.number_format($system['filesscanned']).'</td>
+                    <td>'.number_format($system['bytesscanned']).'</td>
+                    <td>'.$system['status'].'</td>
+                </tr>
+    ';
+}
+
+echo '
+
+            </table>
+
+            </div>
+    ';
+
+include(__DIR__ . '/../includes/footer.phtml');

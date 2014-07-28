@@ -19,6 +19,15 @@ class Scans extends ReconAbstract{
         return $scans;
     }
 
+    public function listCurrentHosts()
+    {
+        $query = $this->getPdo()->prepare('SELECT * FROM hosts WHERE NOT status =4');
+        $query->execute();
+        $current = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        return $current;
+    }
+
     public function deleteScan($id)
     {
 
