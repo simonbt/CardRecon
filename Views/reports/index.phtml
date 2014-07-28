@@ -6,14 +6,9 @@
  * Time: 12:14
  */
 
-echo '  <html>
-            <head>
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-                <link rel="stylesheet" type="text/css" href="/css/main.css">
-                <title>RandomStorm Report Generator</title>
-            </head>
-            <body>
-            <div class="results">
+include(__DIR__ . '/../includes/menuHeader.phtml');
+
+echo '
             <h2>Systems Scanned</h2>
             <form  action="/" method="post" >
             <p><input class="myButton2" type="submit" value="Mark False Positive">
@@ -74,6 +69,6 @@ echo '
             </table>
             </form>
             </div>
-            </body>
-        </html>
     ';
+
+include(__DIR__ . '/../includes/footer.phtml');
