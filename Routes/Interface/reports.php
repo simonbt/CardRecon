@@ -31,6 +31,7 @@ $app->post('/reports', function () use($app, $reportData, $memcache)
         $reportData->markSystemFalsePositive($tracker);
     }
 
+    $systems = $reportData->getResultSystems($memcache);
     $app->render('reports/index.phtml', array('systems' => $systems, 'success' => '1'));
 
 });
