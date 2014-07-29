@@ -13,7 +13,7 @@ class ReportData extends ReportsAbstract
 
     function markSystemFalsePositive($tracker)
     {
-        $query = $this->getPdo()->prepare('UPDATE hosts SET status =9 WHERE tracker =?');
+        $query = $this->getPdo()->prepare('UPDATE hosts SET status =99 WHERE tracker =?');
         $result = $query->execute([$tracker]);
         if (!$result)
         {

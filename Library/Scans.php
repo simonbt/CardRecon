@@ -21,7 +21,7 @@ class Scans extends ReconAbstract{
 
     public function listCurrentHosts()
     {
-        $query = $this->getPdo()->prepare('SELECT hosts.*, host_status.status FROM hosts LEFT JOIN host_status on host_status.id = hosts.status WHERE NOT hosts.status =4');
+        $query = $this->getPdo()->prepare('SELECT hosts.*, host_status.status FROM hosts LEFT JOIN host_status on host_status.id = hosts.status WHERE NOT hosts.status =4 AND NOT host.status=99');
         $query->execute();
         $current = $query->fetchAll(\PDO::FETCH_ASSOC);
 
