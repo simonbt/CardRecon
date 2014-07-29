@@ -45,7 +45,7 @@ class Scans extends ReconAbstract{
     public function addScan($postData)
     {
         $queue =  new \Pheanstalk_Pheanstalk('127.0.0.1:11300');
-        $scan = array('scan_name', 'updated', 'profile_id', 'status', 'hosts');
+        $scan = array('scan_name', 'profile_id', 'status', 'hosts');
 
         foreach ($scan as $key)
         {
