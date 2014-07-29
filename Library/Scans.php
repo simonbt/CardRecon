@@ -55,7 +55,7 @@ class Scans extends ReconAbstract{
             }
         }
 
-        $scanQuery = $this->getPdo()->prepare('INSERT INTO scan (scan_name, added, profile_id, status, hosts, queued) VALUES(?, ?, ?, ?, ?)');
+        $scanQuery = $this->getPdo()->prepare('INSERT INTO scan (scan_name, added, profile_id, status, hosts) VALUES(?, ?, ?, ?, ?)');
         $response = $scanQuery->execute(array($postData['scan_name'], date('Y-m-d H:i:s'), $postData['profile_id'], $postData['status'], $postData['hosts']));
         if (!$response)
         {
