@@ -31,22 +31,22 @@ while($job = $queue->reserve()) {
         case 1:
             $scanner = new \Library\NewAgent($pdo, $received['profile_id'], $received['scan_name'], $received['ip_address'], $queue, $logger);
             $result = $scanner->deployAgent();
-            $worker->checkSuccess($result, $queue, $job);
+            $worker->checkSuccess($result, $job);
             break;
         case 2:
             $scanner = new \Library\ExistingAgent($received['profile_id'], $pdo, $received['host_id'], $queue, $logger);
             $result = $scanner->startService();
-            $worker->checkSuccess($result, $queue, $job);
+            $worker->checkSuccess($result, $job);
             break;
         case 3:
             $scanner = new \Library\ExistingAgent($received['profile_id'], $pdo, $received['host_id'], $queue, $logger);
             $result = $scanner->stopService();
-            $worker->checkSuccess($result, $queue, $job);
+            $worker->checkSuccess($result, $job);
             break;
         case 4:
             $scanner = new \Library\ExistingAgent($received['profile_id'], $pdo, $received['host_id'], $queue, $logger);
             $result = $scanner->killAgent();
-            $worker->checkSuccess($result, $queue, $job);
+            $worker->checkSuccess($result, $job);
             break;
         default:
             break;
