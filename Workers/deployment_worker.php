@@ -9,7 +9,7 @@
 include_once(__DIR__ . '/../Library/bootstrap.php');
 
 $startTime = time();
-$pidLocation = '/tmp/agent_worker.pid';
+$pidLocation = '/tmp/deployment_worker.pid';
 $pid = getmypid();
 $allowedRunTime = $config['worker']['runtime'];
 
