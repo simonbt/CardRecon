@@ -22,5 +22,8 @@ return array(
     'logger'    => array(
         'location'  =>  __DIR__ . '/logs',
         'level'     =>  \Psr\Log\LogLevel::DEBUG
+    ),
+    'worker'    => array(
+        'runtime'   =>  60
     )
 );
