@@ -198,7 +198,7 @@ class AgentControl extends ReconAbstract{
     private function winControl($command)
     {
         $command = 'winexe -U ' . $this->profile['domain'] . '/' . $this->profile['username'] . '%' . $this->profile['password'] . ' //' . $this->ip_address . ' \'' . $command . '\'';
-        echo $command . PHP_EOL;
+        //echo $command . PHP_EOL;
         exec ( $command, $output, $returnValue);
         return array('output' => $output, 'exitcode' => $returnValue);
     }
